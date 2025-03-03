@@ -1,0 +1,106 @@
+<div class="scrolling-nav-container">
+    <div class="scrolling-nav-inner" style="--marquee-speed: 20s; --direction:scroll-left;" role="marquee">
+        <div class="scrolling-nav">
+            <p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p><p>Lamago.Co</p>
+        </div>
+    </div>
+</div>
+<div class="second-nav">
+    <a href="https://www.instagram.com/Lamago.Co/">
+        <img src="/images/logos/instagram.png" alt="instagram" style="height: 1em;">
+    </a>
+    <img src="/images/logos/logo3.jpg" alt="logo3" style="height: 4.5em;">
+    <div class="second-nav-options">
+        <img src="/images/logos/search.png" alt="search" style="height: 1em;">
+        <a href="https://www.instagram.com/Lamago.Co/">
+            <img src="/images/logos/user.png" alt="instagram" style="height: 1em;">
+        </a>
+        <img src="/images/logos/cart.png" alt="cart" style="height: 1em; cursor: pointer;" onclick="openCart()">
+    </div>
+</div>
+<div class="third-nav">
+    <a href="/" class="third-nav-link">HOME</a>
+    <a href="/shop/all" class="third-nav-link">SHOP</a>
+    <a href="/aboutus" class="third-nav-link">ABOUT US</a>
+    <a href="" class="third-nav-link">PRE-ORDER</a>
+    <a href="" class="third-nav-link">GIFT CARDS</a>
+    <a href="" class="third-nav-link">CONTACT US</a>
+</div>
+
+<div class="cart-div-outter" id="cartDivOuter" style="display: none;">
+    <div class="cart-div">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <img src="/images/logos/close.png" alt="close" style="height: 1em; cursor: pointer;" id="closeCart">
+            <p style="margin: 0; font-weight: bold; font-size: 1.1em; font-family: noto sans;">Cart</p>
+            <p style="margin: 0;">4 Item(s)</p>
+        </div>
+        <div class="cart-items-div" id="cartItemsDiv">
+            <% for(var x = 0; x < cart.length; x++) { %>
+            <div class="cart-item">
+                <div style="display: flex; align-items: center; gap: 1em;">
+                    <div class="cart-image" style="background-image: url('/images/clothing/<%= cart[x].image %>');"></div>
+                    <div>
+                        <p><%= cart[x].itemname %></p>
+                        <p>Size: <%= cart[x].size %></p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1em;">
+                    <p>Ksh <%= cart[x].price %></p>
+                    <div class="item-counter-div">
+                        <button class="item-counter-button">-</button>
+                        <p style="margin: 0;"><%= cart[x].quantity %></p>
+                        <button class="item-counter-button">+</button>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <form action="" method="post">
+            <div class="cart-form">
+                <div class="cart-form-section-one">
+                    <div style="background-color: rgb(190, 190, 190); padding: 1em; margin-bottom: 1em;">
+                        <input type="checkbox" name="giftwrap" id="giftwrap">
+                        <label for="giftwrap">Gift wrap (free)</label>
+                    </div>
+                    <div>
+                        <div style="background-color: rgb(190, 190, 190); display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 1em;">
+                            <p style="margin: 0;">Leave a note with your order</p>
+                            <p style="margin: 0;">+</p>
+                        </div>
+                        <textarea name="ordernote" id="ordernote" rows="3" style="width: 99%; margin-top: 0.5em;"></textarea>
+                    </div>
+                </div>
+                <div class="cart-form-section-two">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <p>Subtotal</p>
+                        <p>Ksh 4300</p>
+                    </div>
+                    <p>Shipping calculated at checkout</p>
+                    <div style="width: 100%; height: 1px; background-color: rgb(200, 200, 200);"></div>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <p>Total</p>
+                        <p>Ksh 4300</p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: end; gap: 1em; margin-top: 2em;">
+                <a href="/cart" style="display: block; padding: 1em; background-color: rgb(201, 201, 201); width: fit-content;">View Cart</a>
+                <button style="background-color: black; padding: 1em; color: white; border: none;">Checkout</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    let cartDivOuter = document.getElementById("cartDivOuter")
+
+    function openCart() {
+        cartDivOuter.style.display = "flex"
+    }
+
+    $(document).ready(() => {
+        console.log("ready")
+        $("#closeCart").on("click", () => {
+            $("#cartDivOuter").css("display", "none")
+        })
+    })
+</script>

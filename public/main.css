@@ -1,0 +1,740 @@
+@font-face{
+    font-family: neuzeit;
+    /* src: url("./fonts/Neuzeit_ff/NeuzeitSBook.ttf"); */
+    src: url(./fonts/neuzeitoffice_n4.ae7f155182babff68f1ef962040edcc74cbc0239.woff2);
+}
+
+@font-face{
+    font-family: noto sans;
+    src: url("./fonts/Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf");
+}
+
+@font-face{
+    font-family: open sans;
+    src: url("./fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf");
+}
+
+html{
+    margin: 0;
+}
+
+body{
+    margin: 0;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.scrolling-nav-container{
+    height: 2em;
+    background-color: #5e5b5b;
+    color: white;
+    overflow: hidden;
+}
+
+.scrolling-nav{
+    height: 2em;
+    display: flex;
+    gap: 2em;
+    align-items: center;
+    padding: 0em 1em;
+    animation: var(--direction) var(--marquee-speed) linear infinite;
+}
+
+.scrolling-nav:hover{
+    animation-play-state: paused;
+}
+
+.scrolling-nav p{
+    margin: 0;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.second-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5em 1.5em;
+}
+
+.second-nav-options{
+    display: flex;
+    gap: 0.8em;
+}
+
+.third-nav{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.third-nav a{
+    padding: 0.8em 0.4em;
+    transition: 200ms;
+}
+
+.third-nav a:hover{
+    background-color: black;
+    color: white;
+}
+
+.cart-div-outter{
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-div{
+    width: 85%;
+    height: 90vh;
+    background-color: white;
+    padding: 1em;
+    font-family: neuzeit;
+}
+
+.cart-items-div{
+    overflow-y: scroll;
+    margin-top: 2em;
+    height: 45%;
+    border-top: 1px solid gray;
+}
+
+.cart-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+    border-bottom: 1px solid gray;
+
+}
+
+.cart-image{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    aspect-ratio: 2 / 3;
+    width: 140px;
+}
+
+.cart-form{
+    display: flex;
+    gap: 1em;
+    margin-top: 2em;
+}
+
+.cart-form-section-one{
+    flex: 1;
+}
+
+.cart-form-section-two{
+    flex: 1;
+}
+
+.drag-carousel-image{
+    width: 100%;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
+
+.flickity-page-dots {
+    bottom: 0px;
+}
+
+/* .flickity-page-dots .dot {
+    width: 12px;
+    height: 12px;
+    opacity: 1;
+    background: transparent;
+    border: 2px solid white;
+}
+.flickity-page-dots .dot.is-selected {
+    background: white;
+} */
+
+.shop-item-div-outer{
+    position: relative;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 3em;
+    overflow-x: scroll;
+}
+
+.shop-item-div{
+    display: flex;
+    gap: 1.5em;
+    width: 200%;
+    margin: auto;
+}
+
+.shop-item{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    aspect-ratio: 3 / 5;
+    flex: 1;
+    z-index: 1;
+    position: relative;
+    font-family: open sans;
+    overflow: hidden;
+    /* display: block; */
+}
+
+.second-image{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    aspect-ratio: 3 / 5;
+    z-index: 2;
+    opacity: 0;
+    transition: 300ms;
+}
+
+.shop-item:hover .second-image{
+    opacity: 1;
+    cursor: pointer;
+}
+
+.quick-shop{
+    position: absolute;
+    background-color: black;
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1em;
+    font-size: 0.7em;
+    display: none;
+}
+
+.shop-item:hover .quick-shop{
+    display: block;
+}
+
+.item-sizes{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    font-size: 0.8em;
+    transform: translateY(100%);
+    transform-origin: bottom;
+    transition: 300ms;
+}
+
+.size{
+    padding: 0.3em 0.5em;
+    border: 1px solid rgb(190, 190, 190);
+    cursor: pointer;
+}
+
+.selected-size{
+    background-color: black;
+    color: white;
+}
+
+.item-button{
+    width: 100%;
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 1em;
+    cursor: pointer;
+}
+
+.shop-item:hover .item-sizes{
+    transform: translateY(0);
+}
+
+.index-categories{
+    /* margin-top: 2em; */
+    display: flex;
+    width: 100%;
+    gap: 2em;
+}
+
+.index-category-item{
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    aspect-ratio: 3 / 5;
+    transition: 3s;
+}
+
+.index-category-image{
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    aspect-ratio: 3 / 5;
+    transition: 3s;
+    filter: brightness(80%);
+
+}
+
+.shop-now{
+    display: block;
+    color: white;
+    background-color: black;
+    padding: 1em;
+    font-family: neuzeit;
+    letter-spacing: 1px;
+}
+
+.index-category-item:hover .index-category-image{
+    transform: scale(1.05);
+}
+
+.index-category-link{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    bottom: 20px;
+}
+
+.index-elegance-banner{
+    background-image: url("./images/clothing/eleganceneverfades-picture.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 90vh;
+    filter: brightness(80%);
+}
+
+.index-elegance-banner-info{
+    position: absolute;
+    left: 25px;
+    top: 50%;
+}
+
+.index-elegance-banner-button{
+    border: none;
+    padding: 1em;
+    background-color: rgb(65, 65, 65);
+    color: white;
+    font-family: noto sans;
+    letter-spacing: 1px;
+}
+
+.best-seller-div{
+    width: 100%;
+    display: flex;
+    margin-top: 100px;
+    font-family: noto sans;
+}
+
+.best-seller-image-div{
+    flex: 1;
+    display: flex;
+}
+
+.best-seller-image-one, .best-seller-image-two{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex: 1;
+    aspect-ratio: 2 / 3;
+}
+
+.best-seller-image-one{
+    transform: translate(-50px, -50px);
+}
+
+.best-seller-info{
+    flex: 1;
+}
+
+.best-seller-link{
+    display: block;
+    background-color: black;
+    color: white;
+    padding: 16px 20px;
+    width: fit-content;
+    letter-spacing: 1px;
+    font-size: 0.9em;
+}
+
+.collection-div{
+    border: 2px solid black;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    font-family: noto sans;
+    font-size: 0.9em;
+}
+
+.selected-collection{
+    background-color: white;
+    color: black;
+}
+
+.about-lamago-div{
+    width: 90%;
+    margin: auto;
+    font-family: neuzeit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin: 2em; */
+    gap: 2em;
+}
+
+.about-lamago-info{
+    flex: 1;
+    background-color: #ededed;
+    padding: 1.4em;
+}
+
+.about-lamago-image{
+    flex: 1;
+    aspect-ratio: 3 / 2;
+    background-image: url("./images/clothing/bestseller-image1.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.review-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: neuzeit;
+}
+
+.review-stars{
+    display: flex;
+    gap: 0.3em;
+    margin-top: 1em;
+}
+
+.visual-diary{
+    width: 100%;
+    height: 70vh;
+    position: relative;
+    margin-top: 4em;
+}
+
+.visual-diary-image{
+    background-image: url("./images/clothing/aria-wrap-dress2.webp");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    filter: brightness(70%);
+}
+
+.visual-diary-control{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.play-button{
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.social-media-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+}
+
+.social-media-logo{
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgb(105, 105, 105);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-media-logo-image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.newsletter-div{
+    background-color: #555b5c;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 3em 0em;
+    font-family: neuzeit;
+    margin-top: 6em;
+}
+
+.newsletter-form{
+    border-bottom: 2px solid white;
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.newsletter-input{
+    border: none;
+    color: white;
+    width: 90%;
+    padding: 1em;
+    background-color: #555b5c;
+}
+
+.newsletter-input::placeholder{
+    color: white;
+    letter-spacing: 1px;
+}
+
+.newsletter-input:focus{
+    border: 1px solid gray;
+}
+
+.newsletter-button{
+    background-color: #555b5c;
+    border: none;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.footer-div{
+    width: 100%;
+    font-family: neuzeit;
+}
+
+.footer-section-one{
+    padding-top: 2em;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    gap: 2em;
+}
+
+.footer-section-part{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.footer-section-part p{
+    margin: 10px;
+    font-size: 0.9em;
+}
+
+.footer-title{
+    font-weight: bold;
+    margin-bottom: 1.4em !important;
+}
+
+.footer-link{
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.footer-link2{
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    text-decoration: underline;
+}
+
+/* shop */
+
+.shop-banner{
+    width: 100%;
+    height: 60vh;
+    background-position: 50% 85%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.shop-banner-text{
+    font-family: neuzeit;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+}
+
+.shop-items-main-div{
+    display: flex;
+    margin: auto;
+    margin-top: 4em;
+    gap: 2em;
+    width: 90%;
+    font-family: neuzeit;
+}
+
+.shop-items-categories{
+    flex: 2;
+}
+
+.shop-items-div{
+    flex: 6;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1em;
+}
+
+/* item section */
+
+.clothing-detail-div{
+    display: flex;
+    width: 90%;
+    gap: 2em;
+    margin: auto;
+    font-family: neuzeit;
+}
+
+.clothing-detail-image-div{
+    display: flex;
+    gap: 5px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.detail-image-focus{
+    width: 90%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    aspect-ratio: 2 / 3;
+}
+
+.detail-image-scroll{
+    width: 10%;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+@media screen and (max-width: 1100px) {
+    .detail-image-focus{
+        width: 70%;
+    }
+
+    .detail-image-scroll{
+        width: 30%;
+        min-width: none;
+    }
+}
+
+.detail-image-scroll div{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    aspect-ratio: 2 / 3;
+    cursor: pointer;
+    min-width: 60px;
+}
+
+.clothing-item-info{
+    flex: 1;
+}
+
+.item-counter-div{
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+.item-counter-button{
+    border: none;
+    background-color: white;
+    padding: 1.2em 2em;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.addtocart-button{
+    background-color: rgb(192, 192, 192);
+    border: none;
+    text-align: center;
+    width: 100%;
+    padding: 1.3em;
+    margin-top: 2em;
+    cursor: pointer;
+}
+
+.buynow-button{
+    margin-top: 1em;
+    background-color: black;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 1em;
+}
+
+.item-detail-card-div{
+    width: 100%;
+    margin-top: 2em;
+}
+
+.item-detail-card-tab{
+    padding: 1em;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    cursor: pointer;
+}

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        .newin-carousel{
+            width: 70%;
+            margin: auto;
+        }
+
+        .newin-cell{
+            width: 30%;
+            margin-right: 3.3%;
+        }
+
+        .collection-carousel{
+            width: 90%;
+            margin: auto;
+        }
+
+        .collection-cell{
+            width: 30%;
+            margin-right: 3.33%;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('templates/nav.ejs') %>
+    <div class="main-carousel" data-flickity="{'wrapAround': true}">
+        <div class="carousel-cell" style="width: 100%;">
+            <div class="drag-carousel-image" style="background-image: url('/images/carousel/lamagocarousel1.jpg');">
+                <div class="carousel-text"></div>
+            </div>
+        </div>
+        <div class="carousel-cell" style="width: 100%;">
+            <div class="drag-carousel-image" style="background-image: url('/images/carousel/lamagocarousel2.jpg');">
+                <div class="carousel-text"></div>
+            </div>
+        </div>
+        <div class="carousel-cell" style="width: 100%;">
+            <div class="drag-carousel-image" style="background-image: url('/images/carousel/lamagocarousel3.jpg');">
+                <div class="carousel-text"></div>
+            </div>
+        </div>
+    </div>
+    <div style="background-color: #f8f5f1;">
+        <div style="text-align: center; padding: 3em; width: 70%; margin: auto;">
+            <p style="font-weight: bold; margin-bottom: 2em; font-family: open sans; font-size: 1.5em; margin-top: 0;">HANDMADE IN KENYA LUXURY BRAND</p>
+            <p style="font-family: neuzeit;">LAMAGO is a made in Kenya luxury brand curating chic sustainable pieces with a minimalistic touch . Born from the vision of redefining sophistication, our women's clothing brand embodies the essence of Timeless fashion statement pieces that are sustainable in your wardrobe over the different seasons . Each piece is meticulously crafted to exude a sense of refined grace, capturing the allure of a bygone era with a contemporary twist of minimalism style embracing the luxurious subtlety of LAMAGO.</p>
+        </div>
+    </div>
+    <p style="font-family: open sans; font-size: 1.5em; text-align: center; margin-top: 5px; font-weight: bold;">NEW IN</p>
+    <div class="carousel newin-carousel" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Kara Silk Top - Turquoise</p>
+                    <p style="margin: 0;">$27.00</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top-red1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top-red2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Kara Silk Top - Red</p>
+                    <p style="margin: 0;">$27.00</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/jani-strapy-set-olive1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/jani-strapy-set-olive2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/jani-strapy-set-beige1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/jani-strapy-set-beige2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/tiwi-silk-top1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/tiwi-silk-top2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top2.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top6.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/velora-midi-dress-white1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/velora-midi-dress-white2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/jani-strapy-set1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/jani-strapy-set2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/vito-summer-shorts-black1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/vito-summer-shorts-black2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/vito-summer-shorts-white1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/vito-summer-shorts-white2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/vito-summer-shorts1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/vito-summer-shorts2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell newin-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/velora-midi-dress1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/velora-midi-dress2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="" style="background-color: black; padding: 1em; color: white; margin: auto; margin-bottom: 2em; width: fit-content; display: block; font-family: open sans;">View All</a>
+    <div class="index-categories">
+        <div class="index-category-item">
+            <div class="index-category-image" style="background-image: url('/images/clothing/aria-wrap-dress-green-index.webp');"></div>
+            <div class="index-category-link">
+                <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Dresses</p>
+                <a href="" class="shop-now">Shop Now</a>
+            </div>
+        </div>
+        <div class="index-category-item">
+            <div class="index-category-image" style="background-image: url('/images/clothing/bossy-half-coat-tan-index.webp');"></div>
+            <div class="index-category-link">
+                <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Two Piece Sets</p>
+                <a href="" class="shop-now">Shop Now</a>
+            </div>
+        </div>
+        <div class="index-category-item">
+            <div class="index-category-image" style="background-image: url('/images/clothing/bare-back-midi-index.webp');"></div>
+            <div class="index-category-link">
+                <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Tops</p>
+                <a href="" class="shop-now">Shop Now</a>
+            </div>
+        </div>
+        <div class="index-category-item">
+            <div class="index-category-image" style="background-image: url('/images/clothing/maia-maxi-dress-index.webp');"></div>
+            <div class="index-category-link">
+                <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Bottoms</p>
+                <a href="" class="shop-now">Shop Now</a>
+            </div>
+        </div>
+    </div>
+    <p style="font-family: neuzeit; font-size: 1.5em; font-weight: bold; text-align: center; color: rgb(58, 58, 58); letter-spacing: 2px;">Shop by Style</p>
+    <div style="width: 100%; position: relative;">
+        <div class="index-elegance-banner"></div>
+        <div class="index-elegance-banner-info">
+            <p style="color: white; font-family: noto sans; font-size: 1.5em; font-weight: bold;">ELEGANCE NEVER FADES, STAY STYLISH</p>
+            <button class="index-elegance-banner-button">Explore Now</button>
+        </div>
+    </div>
+    <div style="margin-top: 2em; background-color: rgb(217, 217, 217); padding: 10px;">
+        <p style="font-family: open sans; font-size: 1.5em; text-align: center; margin: 0; font-weight: bold; letter-spacing: 1px;">FREE SHIPPING FOR ORDERS ABOVE 10,000 KSH</p>
+    </div>
+
+    <div class="best-seller-div">
+        <div class="best-seller-image-div">
+            <div class="best-seller-image-two" style="background-image: url('/images/clothing/bestseller-image2.webp');"></div>
+            <div class="best-seller-image-one" style="background-image: url('/images/clothing/bestseller-image1.webp');"></div>
+        </div>
+        <div class="best-seller-info">
+            <p style="font-weight: bold;">BEST SELLER</p>
+            <p style="font-weight: bold; margin: 0;">The <span style="font-style: italic; margin: 0;">"Bossy Pant Set"</span></p>
+            <p style="margin-top: 5px; font-family: neuzeit; color: rgb(53, 53, 53);">Bossy Two piece Set  , Our signature two piece set featuring a sleeveless button down half coat and long flowy pants ,work doesn't have to be boring in the "Bossy two piece set " Pants and Half coat two piece set to elevate your weekend casual look or laid back office wear in style.</p>
+            <a href="" class="best-seller-link">Shop The Look</a>
+        </div>
+    </div>
+    <p style="text-align: center; font-size: 1.4em; font-weight: bold; font-family: noto sans;">Shop by Collection</p>
+    <div style="width: 100%; display: flex; justify-content: center; gap: 1em; margin-bottom: 3em;">
+        <div class="collection-div selected-collection">Summer Capsule</div>
+        <div class="collection-div">Linen Luxe</div>
+        <div class="collection-div">Celestial Chic</div>
+    </div>
+    <div class="carousel collection-carousel" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
+        <div class="carousel-cell collection-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell collection-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell collection-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell collection-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell collection-cell">
+            <div>
+                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
+                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
+                    <a href="" class="quick-shop">QUICK SHOP</a>
+                    <div class="item-sizes">
+                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                            <p style="margin: 0;">Size:</p>
+                            <div class="size">S</div>
+                            <div class="size">M</div>
+                            <div class="size">L</div>
+                            <div class="size">S</div>
+                        </div>
+                        <button class="item-button">Add to cart</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
+                    <p style="margin: 0;">$88.88</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p style="text-align: center; font-size: 1.2em; font-weight: bold; font-family: noto sans; margin-top: 4em; margin-bottom: 2em;">About Lamago</p>
+    <div class="about-lamago-div">
+        <div class="about-lamago-info">
+            <p>We are a made in Kenya , women clothing brand looking to create sustainable timeless fashion that lasts over the years.</p>
+            <p>LAMAGO is originated from the contemporary love of fashion providing exclusive everyday wear for the modern woman. Chic Minimalistic Elegant style being our focal point we strive to achieve just that for an easy well put together look .A world where chic simplicity and enduring style converge.</p>
+            <a href="" class="best-seller-link">Read Our Story</a>
+        </div>
+        <div class="about-lamago-image"></div>
+    </div>
+
+    <p style="text-align: center; font-size: 1.2em; font-weight: bold; font-family: noto sans; margin-top: 3em; margin-bottom: 2em;">Reviews</p>
+    <div class="carousel" style="width: 90%; margin: auto;" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
+        <div class="carousel-cell" style="width: 33%;">
+            <div class="review-div">
+                <p style="font-weight: bold; margin-bottom: 10px;">Name</p>
+                <p style="margin: 0; font-size: 0.9em; letter-spacing: 1px;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas, officia.</p>
+                <div class="review-stars">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell" style="width: 33%;">
+            <div class="review-div">
+                <p style="font-weight: bold; margin-bottom: 10px;">Name</p>
+                <p style="margin: 0; font-size: 0.9em; letter-spacing: 1px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, repudiandae!</p>
+                <div class="review-stars">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell" style="width: 33%;">
+            <div class="review-div">
+                <p style="font-weight: bold; margin-bottom: 10px;">Name</p>
+                <p style="margin: 0; font-size: 0.9em; letter-spacing: 1px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis porro ad neque.</p>
+                <div class="review-stars">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell" style="width: 33%;">
+            <div class="review-div">
+                <p style="font-weight: bold; margin-bottom: 10px;">Name</p>
+                <p style="margin: 0; font-size: 0.9em; letter-spacing: 1px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique?</p>
+                <div class="review-stars">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                </div>
+            </div>
+        </div>
+        <div class="carousel-cell" style="width: 33%;">
+            <div class="review-div">
+                <p style="font-weight: bold; margin-bottom: 10px;">Name</p>
+                <p style="margin: 0; font-size: 0.9em; letter-spacing: 1px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis illo laboriosam repellat repudiandae?</p>
+                <div class="review-stars">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                    <img src="/images/logos/star.png" alt="star" style="height: 0.8em;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="visual-diary">
+        <div class="visual-diary-image"></div>
+        <div class="visual-diary-control">
+            <p style="font-family: noto sans; font-size: 2em; font-weight: bold;">VISUAL DIARY</p>
+            <div class="play-button">
+                <img src="/images/logos/play.png" alt="play" style="height: 0.8em;">
+            </div>
+        </div>
+    </div>
+    <p style="text-align: center; font-size: 1.2em; font-weight: bold; font-family: noto sans; margin-top: 3em; margin-bottom: 2em;">SOCIAL MEDIA</p>
+    <div class="social-media-div">
+        <div class="social-media-logo">
+            <div class="social-media-logo-image" style="background-image: url('/images/logos/instagram.webp');"></div>
+        </div>
+        <div class="social-media-logo">
+            <div class="social-media-logo-image" style="background-image: url('/images/logos/facebook.webp');"></div>
+        </div>
+        <div class="social-media-logo">
+            <div class="social-media-logo-image" style="background-image: url('/images/logos/tiktok.webp');"></div>
+        </div>
+        <div class="social-media-logo">
+            <div class="social-media-logo-image" style="background-image: url('/images/logos/youtube.webp');"></div>
+        </div>
+        <div class="social-media-logo">
+            <div class="social-media-logo-image" style="background-image: url('/images/logos/whatsapp.webp');"></div>
+        </div>
+        <div class="social-media-logo">
+            <div class="social-media-logo-image" style="background-image: url('/images/logos/mail.webp');"></div>
+        </div>
+    </div>
+    <%- include('templates/footer.ejs') %>
+
+</body>
+<script>
+    var elem = document.querySelector('.main-carousel');
+    var flkty = new Flickity( elem, {
+    // options
+    cellAlign: 'left',
+    contain: true
+    });
+
+    // element argument can be a selector string
+    //   for an individual element
+    var flkty = new Flickity( '.main-carousel', {
+    // options
+    });
+</script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/main.css">
+    <title>Shop</title>
+</head>
+<body>
+    <%- include('templates/nav.ejs') %>
+    <div class="shop-banner" style="background-image: url('/images/clothing/aria-wrap-dress-green5.webp');">
+        <p class="shop-banner-text">SHOP</p>
+    </div>
+
+    <div class="shop-items-main-div">
+        <div class="shop-items-categories">
+            <p style="font-weight: bold;">Menu</p>
+            <div style="width: 100%; height: 1px; background-color: rgb(199, 199, 199);"></div>
+            <p>NEW IN</p>
+            <p>DRESSES</p>
+            <p>SETS</p>
+            <p>TOPS</p>
+            <p>PANTS</p>
+            <p>COATS</p>
+            <p>SHORTS</p>
+            <p>SKIRTS</p>
+        </div>
+        <div class="shop-items-div">
+            <% for(var x = 0; x < items.length; x++) { %>
+            <div>
+                <a href="/itemdetail/<%= items[x]._id %>">
+                    <div class="shop-item" style="background-image: url('/images/clothing/<%= items[x].images[0] %>');">
+                        <div class="second-image" style="background-image: url('/images/clothing/<%= items[x].images[1] %>');"></div>
+                        <a href="" class="quick-shop">QUICK SHOP</a>
+                        <div class="item-sizes">
+                            <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;" id="sizes<%= items[x]._id %>">
+                                <p style="margin: 0;">Size:</p>
+                                <div class="size selected-size">S</div>
+                                <div class="size">M</div>
+                                <div class="size">L</div>
+                                <div class="size">S</div>
+                            </div>
+                            <form action="" id="cartform<%= items[x]._id %>">
+                                <input type="hidden" name="size" value="S" id="shopSize">
+                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="itemname" value="<%= items[x].title %>">
+                                <input type="hidden" name="price" value="<%= items[x].price.KES %>">
+                                <input type="hidden" name="action" value="addone">
+                                <input type="hidden" name="picture" value="<%= items[x].images[0] %>">
+                                <button class="item-button">Add to cart</button>
+                            </form>
+                            <script>
+                                $(document).ready(() => {
+                                    $("#cartform<%= items[x]._id %>").on("submit", e => {
+                                        e.preventDefault()
+                                        console.log("serialize")
+                                        let values = $("#cartform<%= items[x]._id %>").serializeArray()
+                                        console.log(values)
+                                        $.ajax({
+                                            method: "post",
+                                            url: "/cart",
+                                            data: {
+                                                size: values[0].value,
+                                                quantity: values[1].value,
+                                                itemname: values[2].value,
+                                                price: values[3].value,
+                                                action: values[4].value,
+                                                image: values[5].value
+                                            },
+                                            success: (res) => {
+                                                console.log(res.cart)
+                                                $("#cartItemsDiv").find("div").remove()
+                                                for (let x = 0; x < res.cart.length; x++) {
+                                                    $("#cartItemsDiv").append(`<div class="cart-item">
+                                                        <div style="display: flex; align-items: center; gap: 1em;">
+                                                            <div class="cart-image" style="background-image: url('/images/clothing/${res.cart[x].image}');"></div>
+                                                            <div>
+                                                                <p>${res.cart[x].itemname}</p>
+                                                                <p>Size: ${res.cart[x].size}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div style="display: flex; align-items: center; gap: 1em;">
+                                                            <p>Ksh ${res.cart[x].price}</p>
+                                                            <div class="item-counter-div">
+                                                                <button class="item-counter-button">-</button>
+                                                                <p style="margin: 0;">${res.cart[x].quantity}</p>
+                                                                <button class="item-counter-button">+</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>`)
+                                                }
+                                                $("#cartDivOuter").css("display", "flex")
+                                            },
+                                            error: (error) => {
+                                                console.log(error)
+                                            }
+                                        })
+                                    })
+                                })
+                            </script>
+                        </div>
+                    </div>
+                </a>
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= items[x].title %></p>
+                    <p style="margin: 0;">KES <%= items[x].price.KES %></p>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <%- include('templates/footer.ejs') %>
+</body>
+</html>

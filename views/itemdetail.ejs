@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('templates/nav.ejs') %>
+    <div class="clothing-detail-div">
+        <div class="clothing-detail-image-div">
+            <div class="detail-image-focus" style="background-image: url('/images/clothing/<%= item.images[0] %>');" id="detailImage"></div>
+            <div class="detail-image-scroll">
+                <% for(var x = 0; x < item.images.length; x++) { %>
+                <div style="background-image: url('/images/clothing/<%= item.images[x] %>');" onclick="changeDetailImage('/images/clothing/<%= item.images[x] %>')"></div>
+                <% } %>
+            </div>
+        </div>
+        <div class="clothing-item-info">
+            <p style="font-weight: bold; font-size: 1.4em; font-family: noto sans;"><%= item.title %></p>
+            <p>Ksh <%= item.price.KES %></p>
+            <p><a href="" style="text-decoration: underline;">shipping</a> calculated at checkout.</p>
+            <div style="display: flex; gap: 2px;">
+                <img src="/images/logos/star.png" alt="star" style="height: 1em; cursor: pointer;">
+                <img src="/images/logos/star.png" alt="star" style="height: 1em; cursor: pointer;">
+                <img src="/images/logos/star.png" alt="star" style="height: 1em; cursor: pointer;">
+                <img src="/images/logos/star.png" alt="star" style="height: 1em; cursor: pointer;">
+                <img src="/images/logos/star.png" alt="star" style="height: 1em; cursor: pointer;">
+            </div>
+            <p>Size: S</p>
+            <div style="display: flex; align-items: center; gap: 0.4em; margin-bottom: 2em;">
+                <div class="size selected-size">XS</div>
+                <div class="size">S</div>
+                <div class="size">M</div>
+                <div class="size">L</div>
+                <div class="size">XL</div>
+            </div>
+            <div class="item-counter-div">
+                <button class="item-counter-button">-</button>
+                <p style="margin: 0;">1</p>
+                <button class="item-counter-button">+</button>
+            </div>
+            <form action="" id="cartform<%= item._id %>" class="addtocart-form">
+                <input type="hidden" name="size" value="S" id="shopSize">
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="itemname" value="<%= item.title %>">
+                <input type="hidden" name="price" value="<%= item.price.KES %>">
+                <input type="hidden" name="action" value="addone">
+                <input type="hidden" name="picture" value="<%= item.images[0] %>">
+                <button class="addtocart-button">Add to cart</button>
+            </form>
+            <script>
+                $(document).ready(() => {
+                    $("#cartform<%= item._id %>").on("submit", e => {
+                        e.preventDefault()
+                        console.log("serialize")
+                        let values = $("#cartform<%= item._id %>").serializeArray()
+                        $.ajax({
+                            method: "post",
+                            url: "/cart",
+                            data: {
+                                size: values[0].value,
+                                quantity: values[1].value,
+                                itemname: values[2].value,
+                                price: values[3].value,
+                                action: values[4].value,
+                                image: values[5].value
+                            },
+                            success: (res) => {
+                                console.log(res.cart)
+                                $("#cartItemsDiv").find("div").remove()
+                                for (let x = 0; x < res.cart.length; x++) {
+                                    $("#cartItemsDiv").append(`<div class="cart-item">
+                                        <div style="display: flex; align-items: center; gap: 1em;">
+                                            <div class="cart-image" style="background-image: url('/images/clothing/${res.cart[x].image}');"></div>
+                                            <div>
+                                                <p>${res.cart[x].itemname}</p>
+                                                <p>Size: ${res.cart[x].size}</p>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 1em;">
+                                            <p>Ksh ${res.cart[x].price}</p>
+                                            <div class="item-counter-div">
+                                                <button class="item-counter-button">-</button>
+                                                <p style="margin: 0;">${res.cart[x].quantity}</p>
+                                                <button class="item-counter-button">+</button>
+                                            </div>
+                                        </div>
+                                    </div>`)
+                                }
+                                $("#cartDivOuter").css("display", "flex")
+                            },
+                            error: (error) => {
+                                console.log(error)
+                            }
+                        })
+                    })
+                })
+            </script>
+            
+            <button class="buynow-button">Buy it now</button>
+            <div class="item-detail-card-div">
+                <div style="display: flex;">
+                    <div class="item-detail-card-tab" style="border-top: 1px solid gray;" id="detailsTab" onclick="changeTab('detailsTab')">Details</div>
+                    <div class="item-detail-card-tab" style="border-bottom: 1px solid gray;" id="careGuideTab" onclick="changeTab('careGuideTab')">Care Guide</div>
+                </div>
+                <div class="item-detail-card" id="detailsCard">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione, magnam!</p>
+                    <p>- Test point</p>
+                    <p>- Test point</p>
+                    <p>- Test point</p>
+                    <p>- Test point</p>
+                </div>
+                <div class="item-detail-card" style="display: none;" id="careGuideCard">
+                    <p style="font-weight: bold;">Handle and Care</p>
+                    <p>Washing machine washable</p>
+                    <p>Use gentle detergents on fabrics</p>
+                    <p>Use gentle cycles</p>
+                    <p>Heat resistance</p>
+                    <p>Iron /steam friendly</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('templates/footer.ejs') %>
+</body>
+<script>
+    function changeTab(id) {
+        let detailsTab = document.getElementById("detailsTab")
+        let careGuideTab = document.getElementById("careGuideTab")
+        let detailsCard = document.getElementById("detailsCard")
+        let careGuideCard = document.getElementById("careGuideCard")
+
+        if (id === "detailsTab") {
+            detailsTab.style.borderTop = "1px solid gray"
+            detailsTab.style.borderBottom = "none"
+            careGuideTab.style.borderTop = "none"
+            careGuideTab.style.borderBottom = "1px solid gray"
+            detailsCard.style.display = "block"
+            careGuideCard.style.display = "none"
+        } else {
+            detailsTab.style.borderTop = "none"
+            detailsTab.style.borderBottom = "1px solid gray"
+            careGuideTab.style.borderTop = "1px solid gray"
+            careGuideTab.style.borderBottom = "none"
+            detailsCard.style.display = "none"
+            careGuideCard.style.display = "block"
+        }
+    }
+
+    function changeDetailImage(image) {
+        let detailImage = document.getElementById("detailImage")
+        console.log(image)
+        detailImage.style.backgroundImage = `url(${image})`
+    }
+</script>
+</html>
