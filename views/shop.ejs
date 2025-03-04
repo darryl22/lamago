@@ -54,9 +54,7 @@
                                 $(document).ready(() => {
                                     $("#cartform<%= items[x]._id %>").on("submit", e => {
                                         e.preventDefault()
-                                        console.log("serialize")
                                         let values = $("#cartform<%= items[x]._id %>").serializeArray()
-                                        console.log(values)
                                         $.ajax({
                                             method: "post",
                                             url: "/cart",
@@ -69,28 +67,9 @@
                                                 image: values[5].value
                                             },
                                             success: (res) => {
-                                                console.log(res.cart)
-                                                $("#cartItemsDiv").find("div").remove()
-                                                for (let x = 0; x < res.cart.length; x++) {
-                                                    $("#cartItemsDiv").append(`<div class="cart-item">
-                                                        <div style="display: flex; align-items: center; gap: 1em;">
-                                                            <div class="cart-image" style="background-image: url('/images/clothing/${res.cart[x].image}');"></div>
-                                                            <div>
-                                                                <p>${res.cart[x].itemname}</p>
-                                                                <p>Size: ${res.cart[x].size}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: flex; align-items: center; gap: 1em;">
-                                                            <p>Ksh ${res.cart[x].price}</p>
-                                                            <div class="item-counter-div">
-                                                                <button class="item-counter-button">-</button>
-                                                                <p style="margin: 0;">${res.cart[x].quantity}</p>
-                                                                <button class="item-counter-button">+</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>`)
-                                                }
                                                 $("#cartDivOuter").css("display", "flex")
+                                                $.fn.updateCart(res.cart, res.cartTotal)
+                                                
                                             },
                                             error: (error) => {
                                                 console.log(error)

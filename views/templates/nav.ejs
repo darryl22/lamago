@@ -12,7 +12,7 @@
     <img src="/images/logos/logo3.jpg" alt="logo3" style="height: 4.5em;">
     <div class="second-nav-options">
         <img src="/images/logos/search.png" alt="search" style="height: 1em;">
-        <a href="https://www.instagram.com/Lamago.Co/">
+        <a href="/login">
             <img src="/images/logos/user.png" alt="instagram" style="height: 1em;">
         </a>
         <img src="/images/logos/cart.png" alt="cart" style="height: 1em; cursor: pointer;" onclick="openCart()">
@@ -37,6 +37,7 @@
         <div class="cart-items-div" id="cartItemsDiv">
             <% for(var x = 0; x < cart.length; x++) { %>
             <div class="cart-item">
+                <img src="/images/logos/close.png" alt="closecart" style="height: 1em; position: absolute; top: 20px; right: 20px; cursor: pointer;" id="remove<%= x %>">
                 <div style="display: flex; align-items: center; gap: 1em;">
                     <div class="cart-image" style="background-image: url('/images/clothing/<%= cart[x].image %>');"></div>
                     <div>
@@ -46,12 +47,72 @@
                 </div>
                 <div style="display: flex; align-items: center; gap: 1em;">
                     <p>Ksh <%= cart[x].price %></p>
-                    <div class="item-counter-div">
-                        <button class="item-counter-button">-</button>
-                        <p style="margin: 0;"><%= cart[x].quantity %></p>
-                        <button class="item-counter-button">+</button>
+                    <div class="item-counter-div" >
+                        <button class="item-counter-button" id="subQuantity<%= x %>">-</button>
+                        <p style="margin: 0;" id="cartQuantity<%= x %>"><%= cart[x].quantity %></p>
+                        <button class="item-counter-button" id="addQuantity<%= x %>">+</button>
                     </div>
                 </div>
+                <script>
+                    $(document).ready(() => {
+                        $("#subQuantity<%= x %>").on("click", (e) => {
+                            console.log("Remove <%= cart[x].itemname %>")
+                            console.log($("#cartQuantity<%= x %>").html())
+                            if (parseInt($("#cartQuantity<%= x %>").html()) > 1) {
+                                $.ajax({
+                                method: "post",
+                                url: "/cart",
+                                data: {
+                                    itemname: "<%= cart[x].itemname %>",
+                                    action: "removeone"
+                                },
+                                success: (res) => {
+                                    $.fn.updateCart(res.cart, res.cartTotal)
+                                },
+                                error: (error) => {
+                                    console.log(error)
+                                }
+                            })
+                            }
+                        })
+                
+                        $("#addQuantity<%= x %>").on("click", (e) => {
+                            console.log("Add <%= cart[x].itemname %>")
+                            $.ajax({
+                                method: "post",
+                                url: "/cart",
+                                data: {
+                                    itemname: "<%= cart[x].itemname %>",
+                                    action: "addquantity"
+                                },
+                                success: (res) => {
+                                    $.fn.updateCart(res.cart, res.cartTotal)
+                                },
+                                error: (error) => {
+                                    console.log(error)
+                                }
+                            })
+                        })
+    
+                        $("#remove<%= x %>").on("click", () => {
+                            console.log("remove<%= x %>")
+                            $.ajax({
+                                method: "post",
+                                url: "/cart",
+                                data: {
+                                    itemname: "<%= cart[x].itemname %>",
+                                    action: "removeitem"
+                                },
+                                success: (res) => {
+                                    $.fn.updateCart(res.cart, res.cartTotal)
+                                },
+                                error: (error) => {
+                                    console.log(error)
+                                }
+                            })
+                        })
+                    })
+                </script>
             </div>
             <% } %>
         </div>
@@ -73,13 +134,13 @@
                 <div class="cart-form-section-two">
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <p>Subtotal</p>
-                        <p>Ksh 4300</p>
+                        <p id="subtotal">Ksh <%= cartTotal %></p>
                     </div>
                     <p>Shipping calculated at checkout</p>
                     <div style="width: 100%; height: 1px; background-color: rgb(200, 200, 200);"></div>
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <p>Total</p>
-                        <p>Ksh 4300</p>
+                        <p id="cartTotal">Ksh <%= cartTotal %></p>
                     </div>
                 </div>
             </div>
@@ -102,5 +163,95 @@
         $("#closeCart").on("click", () => {
             $("#cartDivOuter").css("display", "none")
         })
+
+        $.fn.updateCart = function (cart, total) {
+            let cartItemsDiv = $("#cartItemsDiv")
+            console.log(cart, total)
+            cartItemsDiv.find('div').remove()
+            cartItemsDiv.find('script').remove()
+
+            for (let x = 0; x < cart.length; x++) {
+                cartItemsDiv.append(`
+                    <div class="cart-item">
+                        <img src="/images/logos/close.png" alt="closecart" style="height: 1em; position: absolute; top: 20px; right: 20px; cursor: pointer;" id="remove${x}">
+                        <div style="display: flex; align-items: center; gap: 1em;">
+                            <div class="cart-image" style="background-image: url('/images/clothing/${cart[x].image}');"></div>
+                            <div>
+                                <p>${cart[x].itemname}</p>
+                                <p>Size: ${cart[x].size}</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1em;">
+                            <p>Ksh ${cart[x].price}</p>
+                            <div class="item-counter-div" >
+                                <button class="item-counter-button" id="subQuantity${x}">-</button>
+                                <p style="margin: 0;" id="cartQuantity${x}">${cart[x].quantity}</p>
+                                <button class="item-counter-button" id="addQuantity${x}">+</button>
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(() => {
+                                $("#subQuantity${x}").on("click", (e) => {
+                                    console.log("Remove ${cart[x].itemname}")
+                                    console.log($("#cartQuantity${x}").html())
+                                    if (parseInt($("#cartQuantity${x}").html()) > 1) {
+                                        $.ajax({
+                                        method: "post",
+                                        url: "/cart",
+                                        data: {
+                                            itemname: "${cart[x].itemname}",
+                                            action: "removeone"
+                                        },
+                                        success: (res) => {
+                                            $.fn.updateCart(res.cart, res.cartTotal)
+                                        },
+                                        error: (error) => {
+                                            console.log(error)
+                                        }
+                                    })
+                                    }
+                                })
+                        
+                                $("#addQuantity${x}").on("click", (e) => {
+                                    console.log("Add ${cart[x].itemname}")
+                                    $.ajax({
+                                        method: "post",
+                                        url: "/cart",
+                                        data: {
+                                            itemname: "${cart[x].itemname}",
+                                            action: "addquantity"
+                                        },
+                                        success: (res) => {
+                                            $.fn.updateCart(res.cart, res.cartTotal)
+                                        },
+                                        error: (error) => {
+                                            console.log(error)
+                                        }
+                                    })
+                                })
+            
+                                $("#remove${x}").on("click", () => {
+                                    console.log("remove${x}")
+                                    $.ajax({
+                                        method: "post",
+                                        url: "/cart",
+                                        data: {
+                                            itemname: "${cart[x].itemname}",
+                                            action: "removeitem"
+                                        },
+                                        success: (res) => {
+                                            $.fn.updateCart(res.cart, res.cartTotal)
+                                        },
+                                        error: (error) => {
+                                            console.log(error)
+                                        }
+                                    })
+                                })
+                            })
+                        <\/script>
+                    </div>
+                `)
+            }
+        }
     })
 </script>

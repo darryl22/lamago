@@ -38,13 +38,13 @@
                 <div class="size">XL</div>
             </div>
             <div class="item-counter-div">
-                <button class="item-counter-button">-</button>
-                <p style="margin: 0;">1</p>
-                <button class="item-counter-button">+</button>
+                <button class="item-counter-button" onclick="subQuantity('<%= item._id %>')">-</button>
+                <p style="margin: 0;" id="detailquantity<%= item._id %>">1</p>
+                <button class="item-counter-button" onclick="addQuantity('<%= item._id %>')">+</button>
             </div>
             <form action="" id="cartform<%= item._id %>" class="addtocart-form">
                 <input type="hidden" name="size" value="S" id="shopSize">
-                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="quantity" value="1" id="quantity<%= item._id %>">
                 <input type="hidden" name="itemname" value="<%= item.title %>">
                 <input type="hidden" name="price" value="<%= item.price.KES %>">
                 <input type="hidden" name="action" value="addone">
@@ -52,10 +52,27 @@
                 <button class="addtocart-button">Add to cart</button>
             </form>
             <script>
+                function subQuantity(id) {
+                    detailquantity = document.getElementById("detailquantity<%= item._id %>")
+                    quantityinput = document.getElementById("quantity<%= item._id %>")
+                    let quantity = parseInt(detailquantity.innerHTML) - 1
+                    if (quantity >= 1) {
+                        detailquantity.innerHTML = quantity
+                        quantityinput.value = parseInt(quantityinput.value) - 1
+                    }
+                }
+
+                function addQuantity(id) {
+                    detailquantity = document.getElementById("detailquantity<%= item._id %>")
+                    quantityinput = document.getElementById("quantity<%= item._id %>")
+                    let quantity = parseInt(detailquantity.innerHTML) + 1
+                    detailquantity.innerHTML = quantity
+                    quantityinput.value = parseInt(quantityinput.value) + 1
+                }
+
                 $(document).ready(() => {
                     $("#cartform<%= item._id %>").on("submit", e => {
                         e.preventDefault()
-                        console.log("serialize")
                         let values = $("#cartform<%= item._id %>").serializeArray()
                         $.ajax({
                             method: "post",
@@ -69,28 +86,8 @@
                                 image: values[5].value
                             },
                             success: (res) => {
-                                console.log(res.cart)
-                                $("#cartItemsDiv").find("div").remove()
-                                for (let x = 0; x < res.cart.length; x++) {
-                                    $("#cartItemsDiv").append(`<div class="cart-item">
-                                        <div style="display: flex; align-items: center; gap: 1em;">
-                                            <div class="cart-image" style="background-image: url('/images/clothing/${res.cart[x].image}');"></div>
-                                            <div>
-                                                <p>${res.cart[x].itemname}</p>
-                                                <p>Size: ${res.cart[x].size}</p>
-                                            </div>
-                                        </div>
-                                        <div style="display: flex; align-items: center; gap: 1em;">
-                                            <p>Ksh ${res.cart[x].price}</p>
-                                            <div class="item-counter-div">
-                                                <button class="item-counter-button">-</button>
-                                                <p style="margin: 0;">${res.cart[x].quantity}</p>
-                                                <button class="item-counter-button">+</button>
-                                            </div>
-                                        </div>
-                                    </div>`)
-                                }
                                 $("#cartDivOuter").css("display", "flex")
+                                $.fn.updateCart(res.cart, res.cartTotal)
                             },
                             error: (error) => {
                                 console.log(error)
