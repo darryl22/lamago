@@ -85,6 +85,15 @@ a {
     gap: 5px;
 }
 
+.mobile-nav{
+    display: none;
+    padding: 1em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+}
+
 .third-nav a{
     padding: 0.8em 0.4em;
     transition: 200ms;
@@ -93,6 +102,81 @@ a {
 .third-nav a:hover{
     background-color: black;
     color: white;
+}
+
+.currency-selector-div{
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    background-color: white;
+    z-index: 11;
+    font-family: neuzeit;
+    font-weight: bold;
+    color: rgb(61, 61, 61);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px gray;
+}
+
+.currency-selector{
+    position: absolute;
+    z-index: 11;
+    background-color: white;
+    bottom: 120%;
+    white-space: nowrap;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgb(196, 196, 196);
+}
+
+.currency-selector-item{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.currency-selector-item:hover{
+    background-color: rgb(211, 211, 211);
+}
+
+.sidenav-div-outer{
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    overflow: hidden;
+}
+
+.sidenav-div{
+    width: 70%;
+    height: 100%;
+    padding: 1em;
+    background-color: white;
+    min-width: 300px;
+    font-family: neuzeit;
+    transition: 200ms;
+}
+
+.sidenav-hide{
+    transform: translateX(-100%);
+}
+
+.sidenav-outer-hide{
+    width: 0px;
+}
+
+.sidenav-links-div{
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav-link{
+    padding: 0.8em 0.5em;
+    border-bottom: 1px solid black;
 }
 
 .cart-div-outter{
@@ -140,6 +224,14 @@ a {
     background-repeat: no-repeat;
     aspect-ratio: 2 / 3;
     width: 140px;
+}
+
+.cart-content-div{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10px;
 }
 
 .cart-form{
@@ -196,6 +288,17 @@ a {
     margin: auto;
 }
 
+.gift-card-div{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex: 1;
+    z-index: 1;
+    position: relative;
+    font-family: open sans;
+    overflow: hidden;
+}
+
 .shop-item{
     background-position: center;
     background-repeat: no-repeat;
@@ -240,7 +343,14 @@ a {
     display: block;
 }
 
-.item-sizes{
+.gift-card-image{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    aspect-ratio: 3 / 2;
+} 
+
+.item-sizes, .gift-card-details{
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -272,6 +382,10 @@ a {
 }
 
 .shop-item:hover .item-sizes{
+    transform: translateY(0);
+}
+
+.gift-card-div:hover .gift-card-details{
     transform: translateY(0);
 }
 
@@ -396,6 +510,7 @@ a {
     padding: 5px;
     font-family: noto sans;
     font-size: 0.9em;
+    cursor: pointer;
 }
 
 .selected-collection{
@@ -519,6 +634,13 @@ a {
     margin-top: 6em;
 }
 
+.newsletter-form-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 30%;
+}
+
 .newsletter-form{
     border-bottom: 2px solid white;
     margin-bottom: 1em;
@@ -526,6 +648,13 @@ a {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+}
+
+.newsletter-instagram{
+    height: 1em;
+    width: 1em;
+    margin-left: 1em;
+    display: block;
 }
 
 .newsletter-input{
@@ -629,6 +758,26 @@ a {
 
 .shop-items-categories{
     flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-items-categories a{
+    margin-top: 0.7em;
+}
+
+/* .shop-items-categories a:hover {
+    color: blue;
+} */
+
+.dress-categories{
+    display: flex;
+    flex-direction: column;
+    padding-left: 1em;
+}
+
+.flip-image{
+    transform: rotate(180deg);
 }
 
 .shop-items-div{
@@ -766,7 +915,77 @@ a {
     border-radius: 5px;
 }
 
+.contactus-form{
+    width: 60%;
+    margin: auto;
+    margin-top: 3em;
+    font-family: neuzeit;
+}
+
+.contactus-input{
+    width: 100%;
+    padding: 1.2em;
+    border: 1px solid rgb(211, 211, 211);
+    margin-bottom: 1.5em;
+}
+
+.contactus-input::placeholder{
+    color: black;
+    letter-spacing: 1px;
+}
+
+.contactus-button{
+    padding: 1.2em 2em;
+    letter-spacing: 1px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.collection-toggle-div{
+    width: 100%;
+    height: fit-content;
+}
+
+.hidden{
+    display: none;
+}
+
+.hidden-height{
+    height: 0px;
+}
+
 @media screen and (max-width: 1100px) {
+
+    .mobile-nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .second-nav{
+        display: none;
+    }
+
+    .third-nav{
+        display: none;
+    }
+
+    .cart-content-div{
+        flex-direction: column;
+        font-size: 0.8em;
+    }
+
+    .cart-form{
+        flex-direction: column;
+        font-size: 0.8em;
+    }
+
+    .contactus-form{
+        width: 80%;
+    }
+
     .detail-image-focus{
         width: 80%;
     }
@@ -776,7 +995,39 @@ a {
         min-width: none;
     }
 
+    .newsletter-div{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .newsletter-form-div{
+        width: 80%;
+        justify-content: center;
+    }
+
+    .newsletter-instagram{
+        margin: auto;
+    }
+
+    .footer-section-one{
+        flex-direction: column;
+        align-items: center;
+    }
+
     .clothing-detail-div{
+        flex-direction: column;
+    }
+
+    .shop-items-div{
+        grid-template-columns: 1fr 1fr;
+        flex: 1;
+    }
+
+    .shop-items-categories{
+        flex: 1;
+    }
+
+    .shop-items-main-div{
         flex-direction: column;
     }
 }

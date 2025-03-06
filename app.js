@@ -37,11 +37,69 @@ app.use((request, response, next) => {
         request.session.cart = []
         request.session.cartTotal = 0
     }
+    if (request.session.currency === undefined) {
+        request.session.currency = "KES"
+    }
     next()
 })
 
 app.get("/", (request, response) => {
-    response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+    let summercapsule = []
+    let linenluxe = []
+    let celestialchic = []
+    let newIn = [
+        "Kara Silk Top - Turquoise",
+        "Kara Silk Top - Red",
+        "Jani Strapy Set - Olive",
+        "Jani Strapy Set - Beige",
+        "Tiwi Silk Top",
+        "Kara Silk Top",
+        "Velora Midi Dress - White",
+        "Jani Strapy Set",
+        "Vito Summer Shorts - Black",
+        "Vito Summer Shorts - White",
+        "Vito Summer Shorts",
+        "Velora Midi Dress"
+    ]
+    async function db() {
+        try {
+            const database = client.db("lamago")
+            const clothing = database.collection("clothing")
+            let [res, newItems] = await Promise.all([clothing.find().toArray(), clothing.find({title: {$in : newIn}}).toArray()])
+            for (let x = 0; x < res.length; x++) {
+                let collection
+                try {
+                    collection = res[x].collection.toString()
+                } catch {
+                    collection = "none"
+                }
+                // console.log(collection)
+                if (collection.includes("summercapsule") === true) {
+                    summercapsule.push(res[x])
+                }
+
+                if (collection.includes("linenluxe") === true) {
+                    linenluxe.push(res[x])
+                }
+
+                if (collection.includes("celestialchic") === true) {
+                    celestialchic.push(res[x])
+                }
+            }
+            response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, summercapsule: summercapsule, linenluxe: linenluxe, celestialchic: celestialchic, newitems: newItems})
+        } catch (error) {
+            console.log(error)
+            response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+        }
+    }
+    db()
+    // response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+})
+
+app.post("/changecurrency", (request, response) => {
+    request.session.currency = request.body.action
+    console.log(request.body, request.session.currency)
+    response.json({"currency": request.session.currency})
 })
 
 app.get("/aboutus", (request, response) => {
@@ -49,18 +107,130 @@ app.get("/aboutus", (request, response) => {
 })
 
 app.get("/shop/:category", (request, response) => {
+    console.log(request.params)
     async function db() {
         try {
             const database = client.db("lamago")
             const clothing = database.collection("clothing")
             let res = await clothing.find().toArray()
-            response.render("shop.ejs", {items: res, cart: request.session.cart, cartTotal: request.session.cartTotal})
+            if (request.params.category === "all") {
+                response.render("shop.ejs", {items: res, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "dress"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("dress")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "mididress"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("mididress")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "minidress"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("minidress")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "maxidress"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("maxidress")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "set"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("set")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "top"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("top")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "pants"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("pants")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "coat"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("coat")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "shorts"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("shorts")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            } else if (request.params.category === "skirts"){
+                let itemsArray = []
+                for (let x = 0; x < res.length; x++) {
+                    if (res[x].category.includes("skirts")) {
+                        itemsArray.push(res[x])
+                    }
+                }
+                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            }
         } catch (error) {
             console.log(error)
-            response.render("shop.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+            response.render("shop.ejs", {items: [], cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
         }
     }
     db()
+})
+
+app.get("/preorder", (request, response) => {
+    async function db() {
+        try {
+            const database = client.db("lamago")
+            const clothing = database.collection("clothing")
+            let res = await clothing.find().toArray()
+            let preorder = []
+            for (let x = 0; x < res.length; x++) {
+                try {
+                    if (res[x].preorder === "true") {
+                        preorder.push(res[x])
+                    }
+                } catch {
+                    console.log("no preorder")
+                }
+            }
+            response.render("preorder.ejs", {items: preorder, cart: request.session.cart, cartTotal: request.session.cartTotal})
+        } catch (error) {
+            console.log(error)
+            response.render("preorder.ejs", {items: [], cart: request.session.cart, cartTotal: request.session.cartTotal})
+        }
+    }
+    db()
+})
+
+app.get("/giftcards", (request, response) => {
+    response.render("giftcards.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
 })
 
 app.get("/itemdetail/:id", (request, response) => {
@@ -87,14 +257,16 @@ app.get("/cart", (request,response) => {
 
 app.post("/cart", (request,response) => {
     let action = request.body.action
-    console.log(request.body)
     let cart = request.session.cart
     if (action === "addone") {
         let item = {
             size: request.body.size,
             quantity: parseInt(request.body.quantity),
             itemname: request.body.itemname,
-            price: request.body.price,
+            price: {
+                "KES": request.body.priceKES,
+                "USD": request.body.priceUSD
+            },
             image: request.body.image
         }
 
@@ -138,17 +310,30 @@ app.post("/cart", (request,response) => {
             }
         }
     }
-    let temp = 0
+    let tempKES = 0
+    let tempUSD = 0
     for (let x = 0; x < cart.length; x++) {
-        temp = temp + (cart[x].price * cart[x].quantity)
+        tempKES = tempKES + (cart[x].price.KES * cart[x].quantity)
+        tempUSD = tempUSD + (cart[x].price.USD * cart[x].quantity)
     }
-    console.log(temp)
-    request.session.cartTotal = temp
+    console.log(tempUSD, tempKES)
+    request.session.cartTotal = {
+        "KES": tempKES,
+        "USD": tempUSD
+    }
     response.json({"success": true, "cart": request.session.cart, "cartTotal": request.session.cartTotal})
 })
 
 app.get("/login", (request, response) => {
     response.render("login.ejs")
+})
+
+app.get("/contactus", (request, response) => {
+    response.render("contactus.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+})
+
+app.post("/contactus", (request, response) => {
+    response.redirect("/contactus")
 })
 
 app.post("/login", (request, response) => {

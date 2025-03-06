@@ -20,7 +20,8 @@
         </div>
         <div class="clothing-item-info">
             <p style="font-weight: bold; font-size: 1.4em; font-family: noto sans;"><%= item.title %></p>
-            <p>Ksh <%= item.price.KES %></p>
+            <p class="price-kes">Ksh <%= item.price.KES %></p>
+            <p class="price-usd">$<%= item.price.USD %></p>
             <p><a href="" style="text-decoration: underline;">shipping</a> calculated at checkout.</p>
             <div style="display: flex; gap: 2px;">
                 <img src="/images/logos/star.png" alt="star" style="height: 1em; cursor: pointer;">
@@ -46,7 +47,8 @@
                 <input type="hidden" name="size" value="S" id="shopSize">
                 <input type="hidden" name="quantity" value="1" id="quantity<%= item._id %>">
                 <input type="hidden" name="itemname" value="<%= item.title %>">
-                <input type="hidden" name="price" value="<%= item.price.KES %>">
+                <input type="hidden" name="priceKES" value="<%= item.price.KES %>">
+                <input type="hidden" name="priceUSD" value="<%= item.price.USD %>">
                 <input type="hidden" name="action" value="addone">
                 <input type="hidden" name="picture" value="<%= item.images[0] %>">
                 <button class="addtocart-button">Add to cart</button>
@@ -81,9 +83,10 @@
                                 size: values[0].value,
                                 quantity: values[1].value,
                                 itemname: values[2].value,
-                                price: values[3].value,
-                                action: values[4].value,
-                                image: values[5].value
+                                priceKES: values[3].value,
+                                priceUSD: values[4].value,
+                                action: values[5].value,
+                                image: values[6].value
                             },
                             success: (res) => {
                                 $("#cartDivOuter").css("display", "flex")

@@ -5,17 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/main.css">
-    <title>Shop</title>
+    <title>Preorder</title>
 </head>
 <body>
     <%- include('templates/nav.ejs') %>
-    <% if(category === "all"){ %>
-    <div class="shop-banner" style="background-image: url('/images/clothing/aria-wrap-dress-green5.webp');">
-        <p class="shop-banner-text">SHOP</p>
-    </div>
-    <% } else{ %>
-    <p style="font-weight: bold; font-size: 1.5em; text-align: center; font-family: noto sans;">Shop</p>
-    <% } %>
+    <!-- <div class="shop-banner" style="background-image: url('/images/clothing/aria-wrap-dress-green5.webp');">
+        <p class="shop-banner-text">PRE-ORDER</p>
+    </div> -->
+    <p style="font-weight: bold; font-size: 1.5em; text-align: center; font-family: noto sans;">Pre-Order</p>
 
     <div class="shop-items-main-div">
         <div class="shop-items-categories">
@@ -57,8 +54,7 @@
                                 <input type="hidden" name="size" value="S" id="shopSize">
                                 <input type="hidden" name="quantity" value="1">
                                 <input type="hidden" name="itemname" value="<%= items[x].title %>">
-                                <input type="hidden" name="priceKES" value="<%= items[x].price.KES %>">
-                                <input type="hidden" name="priceUSD" value="<%= items[x].price.USD %>">
+                                <input type="hidden" name="price" value="<%= items[x].price.KES %>">
                                 <input type="hidden" name="action" value="addone">
                                 <input type="hidden" name="picture" value="<%= items[x].images[0] %>">
                                 <button class="item-button">Add to cart</button>
@@ -75,10 +71,9 @@
                                                 size: values[0].value,
                                                 quantity: values[1].value,
                                                 itemname: values[2].value,
-                                                priceKES: values[3].value,
-                                                priceUSD: values[4].value,
-                                                action: values[5].value,
-                                                image: values[6].value
+                                                price: values[3].value,
+                                                action: values[4].value,
+                                                image: values[5].value
                                             },
                                             success: (res) => {
                                                 $("#cartDivOuter").css("display", "flex")
@@ -97,8 +92,7 @@
                 </a>
                 <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                     <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= items[x].title %></p>
-                    <p style="margin: 0;" class="price-kes">KES <%= items[x].price.KES %></p>
-                    <p style="margin: 0;" class="price-usd">$<%= items[x].price.USD %></p>
+                    <p style="margin: 0;">KES <%= items[x].price.KES %></p>
                 </div>
             </div>
             <% } %>

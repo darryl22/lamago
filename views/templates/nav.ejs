@@ -12,7 +12,7 @@
     <img src="/images/logos/logo3.jpg" alt="logo3" style="height: 4.5em;">
     <div class="second-nav-options">
         <img src="/images/logos/search.png" alt="search" style="height: 1em;">
-        <a href="/login">
+        <a href="/profile">
             <img src="/images/logos/user.png" alt="instagram" style="height: 1em;">
         </a>
         <img src="/images/logos/cart.png" alt="cart" style="height: 1em; cursor: pointer;" onclick="openCart()">
@@ -22,9 +22,57 @@
     <a href="/" class="third-nav-link">HOME</a>
     <a href="/shop/all" class="third-nav-link">SHOP</a>
     <a href="/aboutus" class="third-nav-link">ABOUT US</a>
-    <a href="" class="third-nav-link">PRE-ORDER</a>
-    <a href="" class="third-nav-link">GIFT CARDS</a>
-    <a href="" class="third-nav-link">CONTACT US</a>
+    <a href="/preorder" class="third-nav-link">PRE-ORDER</a>
+    <a href="/giftcards" class="third-nav-link">GIFT CARDS</a>
+    <a href="/contactus" class="third-nav-link">CONTACT US</a>
+</div>
+
+<div class="mobile-nav">
+    <img src="/images/logos/menu-bar.png" alt="menubar" style="height: 2em; cursor: pointer;" onclick="openSideNav()">
+    <img src="/images/logos/logo3.jpg" alt="logo3" style="height: 4.5em;">
+    <img src="/images/logos/cart.png" alt="cart" style="height: 1.5em; cursor: pointer;" onclick="openCart()">
+</div>
+<div class="sidenav-div-outer sidenav-outer-hide" id="sidenavDivOuter">
+    <div class="sidenav-div sidenav-hide" id="sidenavDiv">
+        <img src="/images/logos/close.png" alt="close sidebar" style="height: 1.2em; margin-bottom: 1em;" onclick="closeSideNav()">
+        <div style="padding: 5px 10px; display: flex; align-items: center; justify-content: space-between; border: 1px solid black;">
+            <p style="font-weight: bold; margin: 0;">CART</p>
+            <img src="/images/logos/shopping-bag.png" alt="shopping bag" style="height: 1.8em;">
+        </div>
+        <div class="sidenav-links-div">
+            <a href="/" class="sidenav-link">HOME</a>
+            <a href="/shop/all" class="sidenav-link">SHOP</a>
+            <a href="/aboutus" class="sidenav-link">ABOUT US</a>
+            <a href="/preorder" class="sidenav-link">PRE-ORDER</a>
+            <a href="/giftcards" class="sidenav-link">GIFT CARDS</a>
+            <a href="/contactus" class="sidenav-link">CONTACT US</a>
+            <a href="/login" class="sidenav-link"><img src="/images/logos/user.png" alt="instagram" style="height: 0.7em; margin-right: 1em;">Log In/Create Account</a>
+        </div>
+    </div>
+</div>
+
+<div class="currency-selector-div">
+    <div style="display: flex; align-items: center; gap: 1em; padding: 10px; cursor: pointer;" id="currencyToggle">
+        <div style="display: flex; align-items: center; gap: 1em;" class="price-kes">
+            <img src="/images/logos/kes.webp" alt="kesselectorimage" style="height: 1.4em;">
+            <p style="margin: 0;">KES</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1em; display: none;" class="price-usd">
+            <img src="/images/logos/usd.png" alt="usdselectorimage" style="height: 1.4em;">
+            <p style="margin: 0;">USD</p>
+        </div>
+        <img src="/images/logos/arrowdown.png" alt="" style="height: 0.8em; transition: 200ms;" id="currencyArrow">
+    </div>
+    <div class="currency-selector" id="currencySelector">
+        <div class="currency-selector-item" id="setCurrencyKES">
+            <img src="/images/logos/kes.webp" alt="kes selector" style="height: 1em;">
+            <p style="margin: 0;">KES - Kenyan Shilling</p>
+        </div>
+        <div class="currency-selector-item" id="setCurrencyUSD">
+            <img src="/images/logos/usd.png" alt="usd selector" style="height: 1em;">
+            <p style="margin: 0;">USD - US Dollar</p>
+        </div>
+    </div>
 </div>
 
 <div class="cart-div-outter" id="cartDivOuter" style="display: none;">
@@ -32,25 +80,26 @@
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <img src="/images/logos/close.png" alt="close" style="height: 1em; cursor: pointer;" id="closeCart">
             <p style="margin: 0; font-weight: bold; font-size: 1.1em; font-family: noto sans;">Cart</p>
-            <p style="margin: 0;">4 Item(s)</p>
+            <p style="margin: 0;" id="cartItemCount"><%= cart.length %> Item(s)</p>
         </div>
         <div class="cart-items-div" id="cartItemsDiv">
             <% for(var x = 0; x < cart.length; x++) { %>
             <div class="cart-item">
                 <img src="/images/logos/close.png" alt="closecart" style="height: 1em; position: absolute; top: 20px; right: 20px; cursor: pointer;" id="remove<%= x %>">
-                <div style="display: flex; align-items: center; gap: 1em;">
-                    <div class="cart-image" style="background-image: url('/images/clothing/<%= cart[x].image %>');"></div>
+                <div class="cart-image" style="background-image: url('/images/clothing/<%= cart[x].image %>');"></div>
+                <div class="cart-content-div">
                     <div>
                         <p><%= cart[x].itemname %></p>
                         <p>Size: <%= cart[x].size %></p>
                     </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 1em;">
-                    <p>Ksh <%= cart[x].price %></p>
-                    <div class="item-counter-div" >
-                        <button class="item-counter-button" id="subQuantity<%= x %>">-</button>
-                        <p style="margin: 0;" id="cartQuantity<%= x %>"><%= cart[x].quantity %></p>
-                        <button class="item-counter-button" id="addQuantity<%= x %>">+</button>
+                    <div style="display: flex; align-items: center; gap: 1em;">
+                        <p class="price-kes">Ksh <%= cart[x].price.KES %></p>
+                        <p class="price-usd">$<%= cart[x].price.USD %></p>
+                        <div class="item-counter-div" >
+                            <button class="item-counter-button" id="subQuantity<%= x %>">-</button>
+                            <p style="margin: 0;" id="cartQuantity<%= x %>"><%= cart[x].quantity %></p>
+                            <button class="item-counter-button" id="addQuantity<%= x %>">+</button>
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -134,13 +183,15 @@
                 <div class="cart-form-section-two">
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <p>Subtotal</p>
-                        <p id="subtotal">Ksh <%= cartTotal %></p>
+                        <p id="subtotalKES" class="price-kes">Ksh <%= cartTotal.KES %></p>
+                        <p id="subtotalUSD" class="price-usd">$<%= cartTotal.USD %></p>
                     </div>
                     <p>Shipping calculated at checkout</p>
                     <div style="width: 100%; height: 1px; background-color: rgb(200, 200, 200);"></div>
                     <div style="display: flex; align-items: center; justify-content: space-between;">
                         <p>Total</p>
-                        <p id="cartTotal">Ksh <%= cartTotal %></p>
+                        <p id="cartTotalKES" class="price-kes">Ksh <%= cartTotal.KES %></p>
+                        <p id="cartTotalUSD" class="price-usd">$<%= cartTotal.USD %></p>
                     </div>
                 </div>
             </div>
@@ -158,10 +209,75 @@
         cartDivOuter.style.display = "flex"
     }
 
+    function openSideNav() {
+        console.log("sidenav")
+        let sidenavDivOuter = document.getElementById("sidenavDivOuter")
+        let sidenavDiv = document.getElementById("sidenavDiv")
+        sidenavDivOuter.classList.remove("sidenav-outer-hide")
+        sidenavDiv.classList.remove("sidenav-hide")
+    }
+
+    function closeSideNav() {
+        console.log("sidenav")
+        let sidenavDivOuter = document.getElementById("sidenavDivOuter")
+        let sidenavDiv = document.getElementById("sidenavDiv")
+        
+        sidenavDivOuter.classList.add("sidenav-outer-hide")
+        sidenavDiv.classList.add("sidenav-hide")
+    }
+
     $(document).ready(() => {
-        console.log("ready")
         $("#closeCart").on("click", () => {
             $("#cartDivOuter").css("display", "none")
+        })
+
+        $("#currencySelector").hide()
+        $("#currencyToggle").on("click", () => {
+            $("#currencySelector").toggle(200)
+            $("#currencyArrow").toggleClass("flip-image")
+        })
+
+        $("#setCurrencyKES").on("click", () => {
+            console.log("Change to KES")
+
+            $.ajax({
+                method: "post",
+                url: "/changecurrency",
+                data: {
+                    action: "KES"
+                },
+                success: (res) => {
+                    console.log(res)
+                    let currencyKES = $(".price-kes")
+                    let currencyUSD = $(".price-usd")
+                    console.log(currencyKES)
+                    console.log(currencyUSD)
+                },
+                error: (error) => {
+                    console.log(error)
+                }
+            })
+        })
+
+        $("#setCurrencyUSD").on("click", () => {
+            console.log("Change to USD")
+            $.ajax({
+                method: "post",
+                url: "/changecurrency",
+                data: {
+                    action: "USD"
+                },
+                success: (res) => {
+                    console.log(res)
+                    let currencyKES = $(".price-kes")
+                    let currencyUSD = $(".price-usd")
+                    console.log(currencyKES)
+                    console.log(currencyUSD)
+                },
+                error: (error) => {
+                    console.log(error)
+                }
+            })
         })
 
         $.fn.updateCart = function (cart, total) {
@@ -170,23 +286,30 @@
             cartItemsDiv.find('div').remove()
             cartItemsDiv.find('script').remove()
 
+            $("#subtotalKES").html("Ksh" + total.KES)
+            $("#cartTotalKES").html("Ksh" + total.KES)
+            $("#subtotalUSD").html("$" + total.USD)
+            $("#cartTotalUSD").html("$" + total.USD)
+            $("#cartItemCount").html(cart.length + " Item(s)")
+
             for (let x = 0; x < cart.length; x++) {
                 cartItemsDiv.append(`
                     <div class="cart-item">
                         <img src="/images/logos/close.png" alt="closecart" style="height: 1em; position: absolute; top: 20px; right: 20px; cursor: pointer;" id="remove${x}">
-                        <div style="display: flex; align-items: center; gap: 1em;">
-                            <div class="cart-image" style="background-image: url('/images/clothing/${cart[x].image}');"></div>
+                        <div class="cart-image" style="background-image: url('/images/clothing/${cart[x].image}');"></div>
+                        <div class="cart-content-div">
                             <div>
                                 <p>${cart[x].itemname}</p>
                                 <p>Size: ${cart[x].size}</p>
                             </div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 1em;">
-                            <p>Ksh ${cart[x].price}</p>
-                            <div class="item-counter-div" >
-                                <button class="item-counter-button" id="subQuantity${x}">-</button>
-                                <p style="margin: 0;" id="cartQuantity${x}">${cart[x].quantity}</p>
-                                <button class="item-counter-button" id="addQuantity${x}">+</button>
+                            <div style="display: flex; align-items: center; gap: 1em;">
+                                <p>Ksh ${cart[x].price.KES}</p>
+                                <p>$${cart[x].price.USD}</p>
+                                <div class="item-counter-div" >
+                                    <button class="item-counter-button" id="subQuantity${x}">-</button>
+                                    <p style="margin: 0;" id="cartQuantity${x}">${cart[x].quantity}</p>
+                                    <button class="item-counter-button" id="addQuantity${x}">+</button>
+                                </div>
                             </div>
                         </div>
                         <script>

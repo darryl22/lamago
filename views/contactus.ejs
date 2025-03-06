@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('templates/nav.ejs') %>
+    <p style="font-weight: bold; font-size: 1.5em; text-align: center; font-family: noto sans;">Contact</p>
+    <form action="/contactus" method="post" class="contactus-form">
+        <input type="text" class="contactus-input" name="name" placeholder="Name">
+        <input type="text" class="contactus-input" name="email" placeholder="Email">
+        <input type="text" class="contactus-input" name="phone" placeholder="Phone Number">
+        <textarea id="" name="message" placeholder="message" class="contactus-input" rows="6"></textarea>
+        <button class="contactus-button">Send</button>
+    </form>
+    <%- include('templates/footer.ejs') %>
+</body>
+</html>

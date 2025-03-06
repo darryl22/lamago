@@ -9,30 +9,52 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <style>
         .newin-carousel{
-            width: 70%;
+            width: 75%;
             margin: auto;
         }
 
         .newin-cell{
-            width: 30%;
-            margin-right: 3.3%;
+            width: 23%;
+            margin-right: 2%;
         }
 
         .collection-carousel{
             width: 90%;
             margin: auto;
+            height: auto;
         }
 
         .collection-cell{
             width: 30%;
             margin-right: 3.33%;
         }
+
+        .collection-cell2{
+            width: 23%;
+            margin-right: 2%;
+        }
+
+        @media screen and (max-width: 800px) {
+            .collection-cell{
+                width: 45%;
+                margin-right: 5%;
+            }
+
+            .collection-cell2{
+                width: 45%;
+                margin-right: 5%;
+            }
+            .newin-cell{
+                width: 45%;
+                margin-right: 5%;
+            }
+        }
     </style>
     <title>Document</title>
 </head>
 <body>
     <%- include('templates/nav.ejs') %>
-    <div class="main-carousel" data-flickity="{'wrapAround': true}">
+    <div class="carousel" data-flickity='{"wrapAround": true, "pageDots": false}'>
         <div class="carousel-cell" style="width: 100%;">
             <div class="drag-carousel-image" style="background-image: url('/images/carousel/lamagocarousel1.jpg');">
                 <div class="carousel-text"></div>
@@ -57,300 +79,98 @@
     </div>
     <p style="font-family: open sans; font-size: 1.5em; text-align: center; margin-top: 5px; font-weight: bold;">NEW IN</p>
     <div class="carousel newin-carousel" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
+        <% for(var x = 0; x < newitems.length; x++) { %>
         <div class="carousel-cell newin-cell">
             <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
+                <a href="/itemdetail/<%= newitems[x]._id %>">
+                    <div class="shop-item" style="background-image: url('/images/clothing/<%= newitems[x].images[0] %>');">
+                        <div class="second-image" style="background-image: url('/images/clothing/<%= newitems[x].images[1] %>');"></div>
+                        <a href="" class="quick-shop">QUICK SHOP</a>
+                        <div class="item-sizes">
+                            <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                                <p style="margin: 0;">Size:</p>
+                                <div class="size">S</div>
+                                <div class="size">M</div>
+                                <div class="size">L</div>
+                                <div class="size">S</div>
+                            </div>
+                            <form action="" id="newInCart<%= newitems[x]._id %>">
+                                <input type="hidden" name="size" value="S" id="shopSize">
+                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="itemname" value="<%= newitems[x].title %>">
+                                <input type="hidden" name="price" value="<%= newitems[x].price.KES %>">
+                                <input type="hidden" name="action" value="addone">
+                                <input type="hidden" name="picture" value="<%= newitems[x].images[0] %>">
+                                <button class="item-button">Add to cart</button>
+                            </form>
+                            <script>
+                                $(document).ready(() => {
+                                    $("#newInCart<%= newitems[x]._id %>").on("submit", e => {
+                                        e.preventDefault()
+                                        let values = $("#newInCart<%= newitems[x]._id %>").serializeArray()
+                                        $.ajax({
+                                            method: "post",
+                                            url: "/cart",
+                                            data: {
+                                                size: values[0].value,
+                                                quantity: values[1].value,
+                                                itemname: values[2].value,
+                                                price: values[3].value,
+                                                action: values[4].value,
+                                                image: values[5].value
+                                            },
+                                            success: (res) => {
+                                                $("#cartDivOuter").css("display", "flex")
+                                                $.fn.updateCart(res.cart, res.cartTotal)
+                                                
+                                            },
+                                            error: (error) => {
+                                                console.log(error)
+                                            }
+                                        })
+                                    })
+                                })
+                            </script>
                         </div>
-                        <button class="item-button">Add to cart</button>
                     </div>
-                </div>
+                </a>
                 <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Kara Silk Top - Turquoise</p>
-                    <p style="margin: 0;">$27.00</p>
+                    <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= newitems[x].title %></p>
+                    <p style="margin: 0;">Ksh <%= newitems[x].price.KES %></p>
                 </div>
             </div>
         </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top-red1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top-red2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Kara Silk Top - Red</p>
-                    <p style="margin: 0;">$27.00</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/jani-strapy-set-olive1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/jani-strapy-set-olive2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/jani-strapy-set-beige1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/jani-strapy-set-beige2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/tiwi-silk-top1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/tiwi-silk-top2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top2.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top6.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/velora-midi-dress-white1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/velora-midi-dress-white2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/jani-strapy-set1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/jani-strapy-set2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/vito-summer-shorts-black1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/vito-summer-shorts-black2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/vito-summer-shorts-white1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/vito-summer-shorts-white2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/vito-summer-shorts1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/vito-summer-shorts2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell newin-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/velora-midi-dress1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/velora-midi-dress2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
+        <% } %>
     </div>
 
-    <a href="" style="background-color: black; padding: 1em; color: white; margin: auto; margin-bottom: 2em; width: fit-content; display: block; font-family: open sans;">View All</a>
+    <a href="/shop/all" style="background-color: black; padding: 1em; color: white; margin: auto; margin-bottom: 2em; width: fit-content; display: block; font-family: open sans;">View All</a>
     <div class="index-categories">
         <div class="index-category-item">
             <div class="index-category-image" style="background-image: url('/images/clothing/aria-wrap-dress-green-index.webp');"></div>
             <div class="index-category-link">
                 <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Dresses</p>
-                <a href="" class="shop-now">Shop Now</a>
+                <a href="/shop/dresses" class="shop-now">Shop Now</a>
             </div>
         </div>
         <div class="index-category-item">
             <div class="index-category-image" style="background-image: url('/images/clothing/bossy-half-coat-tan-index.webp');"></div>
             <div class="index-category-link">
                 <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Two Piece Sets</p>
-                <a href="" class="shop-now">Shop Now</a>
+                <a href="/shop/sets" class="shop-now">Shop Now</a>
             </div>
         </div>
         <div class="index-category-item">
             <div class="index-category-image" style="background-image: url('/images/clothing/bare-back-midi-index.webp');"></div>
             <div class="index-category-link">
                 <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Tops</p>
-                <a href="" class="shop-now">Shop Now</a>
+                <a href="/shop/top" class="shop-now">Shop Now</a>
             </div>
         </div>
         <div class="index-category-item">
             <div class="index-category-image" style="background-image: url('/images/clothing/maia-maxi-dress-index.webp');"></div>
             <div class="index-category-link">
                 <p style="font-family: open sans; font-weight: bold; font-size: 1.5em;">Bottoms</p>
-                <a href="" class="shop-now">Shop Now</a>
+                <a href="/shop/pants" class="shop-now">Shop Now</a>
             </div>
         </div>
     </div>
@@ -379,121 +199,208 @@
         </div>
     </div>
     <p style="text-align: center; font-size: 1.4em; font-weight: bold; font-family: noto sans;">Shop by Collection</p>
-    <div style="width: 100%; display: flex; justify-content: center; gap: 1em; margin-bottom: 3em;">
-        <div class="collection-div selected-collection">Summer Capsule</div>
-        <div class="collection-div">Linen Luxe</div>
-        <div class="collection-div">Celestial Chic</div>
+
+    <div style="width: 100%; display: flex; justify-content: center; gap: 1em; margin-bottom: 3em;" id="collectionSelector">
+        <div class="collection-div selected-collection" id="summerCapsule">Summer Capsule</div>
+        <div class="collection-div" id="linenLuxe">Linen Luxe</div>
+        <div class="collection-div" id="celestialChic">Celestial Chic</div>
     </div>
-    <div class="carousel collection-carousel" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
-        <div class="carousel-cell collection-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
+    <div class="collection-toggle-div" id="summerCapsuleCarousel">
+        <div class="carousel collection-carousel" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
+            <% for(var x = 0; x < summercapsule.length; x++) { %>
+            <div class="carousel-cell collection-cell">
+                <div>
+                    <a href="/itemdetail/<%= summercapsule[x]._id %>">
+                        <div class="shop-item" style="background-image: url('/images/clothing/<%= summercapsule[x].images[0] %>');">
+                            <div class="second-image" style="background-image: url('/images/clothing/<%= summercapsule[x].images[1] %>');"></div>
+                            <a href="" class="quick-shop">QUICK SHOP</a>
+                            <div class="item-sizes">
+                                <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                                    <p style="margin: 0;">Size:</p>
+                                    <div class="size">S</div>
+                                    <div class="size">M</div>
+                                    <div class="size">L</div>
+                                    <div class="size">S</div>
+                                </div>
+                                <form action="" id="cartformSummer<%= summercapsule[x]._id %>">
+                                    <input type="hidden" name="size" value="S" id="shopSize">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="itemname" value="<%= summercapsule[x].title %>">
+                                    <input type="hidden" name="price" value="<%= summercapsule[x].price.KES %>">
+                                    <input type="hidden" name="action" value="addone">
+                                    <input type="hidden" name="picture" value="<%= summercapsule[x].images[0] %>">
+                                    <button class="item-button">Add to cart</button>
+                                </form>
+                                <script>
+                                    $(document).ready(() => {
+                                        $("#cartformSummer<%= summercapsule[x]._id %>").on("submit", e => {
+                                            e.preventDefault()
+                                            let values = $("#cartformSummer<%= summercapsule[x]._id %>").serializeArray()
+                                            $.ajax({
+                                                method: "post",
+                                                url: "/cart",
+                                                data: {
+                                                    size: values[0].value,
+                                                    quantity: values[1].value,
+                                                    itemname: values[2].value,
+                                                    price: values[3].value,
+                                                    action: values[4].value,
+                                                    image: values[5].value
+                                                },
+                                                success: (res) => {
+                                                    $("#cartDivOuter").css("display", "flex")
+                                                    $.fn.updateCart(res.cart, res.cartTotal)
+                                                    
+                                                },
+                                                error: (error) => {
+                                                    console.log(error)
+                                                }
+                                            })
+                                        })
+                                    })
+                                </script>
+                            </div>
                         </div>
-                        <button class="item-button">Add to cart</button>
+                    </a>
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= summercapsule[x].title %></p>
+                        <p style="margin: 0;">Ksh <%= summercapsule[x].price.KES %></p>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
             </div>
+            <% } %>
         </div>
-        <div class="carousel-cell collection-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
+    </div>
+    <div class="collection-toggle-div" id="linenLuxeCarousel">
+        <div class="carousel collection-carousel" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
+            <% for(var x = 0; x < linenluxe.length; x++) { %>
+            <div class="carousel-cell collection-cell2">
+                <div>
+                    <a href="/itemdetail/<%= linenluxe[x]._id %>">
+                        <div class="shop-item" style="background-image: url('/images/clothing/<%= linenluxe[x].images[0] %>');">
+                            <div class="second-image" style="background-image: url('/images/clothing/<%= linenluxe[x].images[1] %>');"></div>
+                            <a href="" class="quick-shop">QUICK SHOP</a>
+                            <div class="item-sizes">
+                                <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                                    <p style="margin: 0;">Size:</p>
+                                    <div class="size">S</div>
+                                    <div class="size">M</div>
+                                    <div class="size">L</div>
+                                    <div class="size">S</div>
+                                </div>
+                                <form action="" id="cartformLinen<%= linenluxe[x]._id %>">
+                                    <input type="hidden" name="size" value="S" id="shopSize">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="itemname" value="<%= linenluxe[x].title %>">
+                                    <input type="hidden" name="price" value="<%= linenluxe[x].price.KES %>">
+                                    <input type="hidden" name="action" value="addone">
+                                    <input type="hidden" name="picture" value="<%= linenluxe[x].images[0] %>">
+                                    <button class="item-button">Add to cart</button>
+                                </form>
+                                <script>
+                                    $(document).ready(() => {
+                                        $("#cartformLinen<%= linenluxe[x]._id %>").on("submit", e => {
+                                            e.preventDefault()
+                                            let values = $("#cartformLinen<%= linenluxe[x]._id %>").serializeArray()
+                                            $.ajax({
+                                                method: "post",
+                                                url: "/cart",
+                                                data: {
+                                                    size: values[0].value,
+                                                    quantity: values[1].value,
+                                                    itemname: values[2].value,
+                                                    price: values[3].value,
+                                                    action: values[4].value,
+                                                    image: values[5].value
+                                                },
+                                                success: (res) => {
+                                                    $("#cartDivOuter").css("display", "flex")
+                                                    $.fn.updateCart(res.cart, res.cartTotal)
+                                                    
+                                                },
+                                                error: (error) => {
+                                                    console.log(error)
+                                                }
+                                            })
+                                        })
+                                    })
+                                </script>
+                            </div>
                         </div>
-                        <button class="item-button">Add to cart</button>
+                    </a>
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= linenluxe[x].title %></p>
+                        <p style="margin: 0;">Ksh <%= linenluxe[x].price.KES %></p>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
             </div>
+            <% } %>
         </div>
-        <div class="carousel-cell collection-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
+    </div>
+    <div class="collection-toggle-div" id="celestialChicCarousel">
+        <div class="carousel collection-carousel" data-flickity='{ "groupCells": true, "wrapAround": true, "pageDots": false }'>
+            <% for(var x = 0; x < celestialchic.length; x++) { %>
+            <div class="carousel-cell collection-cell2">
+                <div>
+                    <a href="/itemdetail/<%= celestialchic[x]._id %>">
+                        <div class="shop-item" style="background-image: url('/images/clothing/<%= celestialchic[x].images[0] %>');">
+                            <div class="second-image" style="background-image: url('/images/clothing/<%= celestialchic[x].images[1] %>');"></div>
+                            <a href="" class="quick-shop">QUICK SHOP</a>
+                            <div class="item-sizes">
+                                <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
+                                    <p style="margin: 0;">Size:</p>
+                                    <div class="size">S</div>
+                                    <div class="size">M</div>
+                                    <div class="size">L</div>
+                                    <div class="size">S</div>
+                                </div>
+                                <form action="" id="cartformCelest<%= celestialchic[x]._id %>">
+                                    <input type="hidden" name="size" value="S" id="shopSize">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="itemname" value="<%= celestialchic[x].title %>">
+                                    <input type="hidden" name="price" value="<%= celestialchic[x].price.KES %>">
+                                    <input type="hidden" name="action" value="addone">
+                                    <input type="hidden" name="picture" value="<%= celestialchic[x].images[0] %>">
+                                    <button class="item-button">Add to cart</button>
+                                </form>
+                                <script>
+                                    $(document).ready(() => {
+                                        $("#cartformCelest<%= celestialchic[x]._id %>").on("submit", e => {
+                                            e.preventDefault()
+                                            let values = $("#cartformCelest<%= celestialchic[x]._id %>").serializeArray()
+                                            $.ajax({
+                                                method: "post",
+                                                url: "/cart",
+                                                data: {
+                                                    size: values[0].value,
+                                                    quantity: values[1].value,
+                                                    itemname: values[2].value,
+                                                    price: values[3].value,
+                                                    action: values[4].value,
+                                                    image: values[5].value
+                                                },
+                                                success: (res) => {
+                                                    $("#cartDivOuter").css("display", "flex")
+                                                    $.fn.updateCart(res.cart, res.cartTotal)
+                                                    
+                                                },
+                                                error: (error) => {
+                                                    console.log(error)
+                                                }
+                                            })
+                                        })
+                                    })
+                                </script>
+                            </div>
                         </div>
-                        <button class="item-button">Add to cart</button>
+                    </a>
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= celestialchic[x].title %></p>
+                        <p style="margin: 0;">Ksh <%= celestialchic[x].price.KES %></p>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
             </div>
-        </div>
-        <div class="carousel-cell collection-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-cell collection-cell">
-            <div>
-                <div class="shop-item" style="background-image: url('/images/clothing/kara-silk-top1.webp');">
-                    <div class="second-image" style="background-image: url('/images/clothing/kara-silk-top2.webp');"></div>
-                    <a href="" class="quick-shop">QUICK SHOP</a>
-                    <div class="item-sizes">
-                        <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
-                            <p style="margin: 0;">Size:</p>
-                            <div class="size">S</div>
-                            <div class="size">M</div>
-                            <div class="size">L</div>
-                            <div class="size">S</div>
-                        </div>
-                        <button class="item-button">Add to cart</button>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;">Jani Strappy Set - Beige</p>
-                    <p style="margin: 0;">$88.88</p>
-                </div>
-            </div>
+            <% } %>
         </div>
     </div>
     <p style="text-align: center; font-size: 1.2em; font-weight: bold; font-family: noto sans; margin-top: 4em; margin-bottom: 2em;">About Lamago</p>
@@ -620,5 +527,40 @@
     var flkty = new Flickity( '.main-carousel', {
     // options
     });
+
+    $(document).ready(() => {
+        $("#linenLuxeCarousel").hide()
+        $("#celestialChicCarousel").hide()
+        
+        $("#summerCapsule").on("click", () => {
+            $("#summerCapsule").addClass("selected-collection")
+            $("#linenLuxe").removeClass("selected-collection")
+            $("#celestialChic").removeClass("selected-collection")
+
+            $("#summerCapsuleCarousel").show()
+            $("#linenLuxeCarousel").hide()
+            $("#celestialChicCarousel").hide()
+        })
+
+        $("#linenLuxe").on("click", () => {
+            $("#linenLuxe").addClass("selected-collection")
+            $("#summerCapsule").removeClass("selected-collection")
+            $("#celestialChic").removeClass("selected-collection")
+
+            $("#linenLuxeCarousel").show()
+            $("#summerCapsuleCarousel").hide()
+            $("#celestialChicCarousel").hide()
+        })
+
+        $("#celestialChic").on("click", () => {
+            $("#celestialChic").addClass("selected-collection")
+            $("#summerCapsule").removeClass("selected-collection")
+            $("#linenLuxe").removeClass("selected-collection")
+
+            $("#celestialChicCarousel").show()
+            $("#summerCapsuleCarousel").hide()
+            $("#linenLuxeCarousel").hide()
+        })
+    })
 </script>
 </html>
