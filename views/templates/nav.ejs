@@ -57,7 +57,7 @@
             <img src="/images/logos/kes.webp" alt="kesselectorimage" style="height: 1.4em;">
             <p style="margin: 0;">KES</p>
         </div>
-        <div style="display: flex; align-items: center; gap: 1em; display: none;" class="price-usd">
+        <div style="display: flex; align-items: center; gap: 1em;" class="price-usd">
             <img src="/images/logos/usd.png" alt="usdselectorimage" style="height: 1.4em;">
             <p style="margin: 0;">USD</p>
         </div>
@@ -113,6 +113,7 @@
                                 url: "/cart",
                                 data: {
                                     itemname: "<%= cart[x].itemname %>",
+                                    size: "<%= cart[x].size %>",
                                     action: "removeone"
                                 },
                                 success: (res) => {
@@ -132,6 +133,7 @@
                                 url: "/cart",
                                 data: {
                                     itemname: "<%= cart[x].itemname %>",
+                                    size: "<%= cart[x].size %>",
                                     action: "addquantity"
                                 },
                                 success: (res) => {
@@ -150,6 +152,7 @@
                                 url: "/cart",
                                 data: {
                                     itemname: "<%= cart[x].itemname %>",
+                                    size: "<%= cart[x].size %>",
                                     action: "removeitem"
                                 },
                                 success: (res) => {
@@ -165,7 +168,7 @@
             </div>
             <% } %>
         </div>
-        <form action="" method="post">
+        <form action="/checkout" method="get">
             <div class="cart-form">
                 <div class="cart-form-section-one">
                     <div style="background-color: rgb(190, 190, 190); padding: 1em; margin-bottom: 1em;">
@@ -173,12 +176,17 @@
                         <label for="giftwrap">Gift wrap (free)</label>
                     </div>
                     <div>
-                        <div style="background-color: rgb(190, 190, 190); display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 1em;">
+                        <div style="background-color: rgb(190, 190, 190); display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 1em;" id="orderNoteToggle">
                             <p style="margin: 0;">Leave a note with your order</p>
                             <p style="margin: 0;">+</p>
                         </div>
-                        <textarea name="ordernote" id="ordernote" rows="3" style="width: 99%; margin-top: 0.5em;"></textarea>
+                        <textarea name="ordernote" id="orderNote" rows="3" style="width: 99%; margin-top: 0.5em; display: none;"></textarea>
                     </div>
+                    <script>
+                        $("#orderNoteToggle").on("click", () => {
+                            $("#orderNote").toggle(200)
+                        })
+                    </script>
                 </div>
                 <div class="cart-form-section-two">
                     <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -232,6 +240,16 @@
         })
 
         $("#currencySelector").hide()
+
+        let currency = "<%= currency %>"
+        if (currency === "KES") {
+            $(".price-kes").show()
+            $(".price-usd").hide()
+        } else {
+            $(".price-kes").hide()
+            $(".price-usd").show()
+        }
+
         $("#currencyToggle").on("click", () => {
             $("#currencySelector").toggle(200)
             $("#currencyArrow").toggleClass("flip-image")
@@ -247,11 +265,9 @@
                     action: "KES"
                 },
                 success: (res) => {
-                    console.log(res)
-                    let currencyKES = $(".price-kes")
-                    let currencyUSD = $(".price-usd")
-                    console.log(currencyKES)
-                    console.log(currencyUSD)
+                    $("#currencySelector").hide(200)
+                    $(".price-kes").show()
+                    $(".price-usd").hide()
                 },
                 error: (error) => {
                     console.log(error)
@@ -268,11 +284,9 @@
                     action: "USD"
                 },
                 success: (res) => {
-                    console.log(res)
-                    let currencyKES = $(".price-kes")
-                    let currencyUSD = $(".price-usd")
-                    console.log(currencyKES)
-                    console.log(currencyUSD)
+                    $("#currencySelector").hide(200)
+                    $(".price-kes").hide()
+                    $(".price-usd").show()
                 },
                 error: (error) => {
                     console.log(error)
@@ -282,14 +296,14 @@
 
         $.fn.updateCart = function (cart, total) {
             let cartItemsDiv = $("#cartItemsDiv")
-            console.log(cart, total)
+            console.log(currency)
             cartItemsDiv.find('div').remove()
             cartItemsDiv.find('script').remove()
 
-            $("#subtotalKES").html("Ksh" + total.KES)
-            $("#cartTotalKES").html("Ksh" + total.KES)
-            $("#subtotalUSD").html("$" + total.USD)
-            $("#cartTotalUSD").html("$" + total.USD)
+            $("#subtotalKES").html("Ksh" + total.KES.toFixed(2))
+            $("#cartTotalKES").html("Ksh" + total.KES.toFixed(2))
+            $("#subtotalUSD").html("$" + total.USD.toFixed(2))
+            $("#cartTotalUSD").html("$" + total.USD.toFixed(2))
             $("#cartItemCount").html(cart.length + " Item(s)")
 
             for (let x = 0; x < cart.length; x++) {
@@ -303,8 +317,8 @@
                                 <p>Size: ${cart[x].size}</p>
                             </div>
                             <div style="display: flex; align-items: center; gap: 1em;">
-                                <p>Ksh ${cart[x].price.KES}</p>
-                                <p>$${cart[x].price.USD}</p>
+                                <p class="price-kes">Ksh ${cart[x].price.KES}</p>
+                                <p class="price-usd">$${cart[x].price.USD}</p>
                                 <div class="item-counter-div" >
                                     <button class="item-counter-button" id="subQuantity${x}">-</button>
                                     <p style="margin: 0;" id="cartQuantity${x}">${cart[x].quantity}</p>
@@ -323,6 +337,7 @@
                                         url: "/cart",
                                         data: {
                                             itemname: "${cart[x].itemname}",
+                                            size: "${cart[x].size}",
                                             action: "removeone"
                                         },
                                         success: (res) => {
@@ -342,6 +357,7 @@
                                         url: "/cart",
                                         data: {
                                             itemname: "${cart[x].itemname}",
+                                            size: "${cart[x].size}",
                                             action: "addquantity"
                                         },
                                         success: (res) => {
@@ -360,6 +376,7 @@
                                         url: "/cart",
                                         data: {
                                             itemname: "${cart[x].itemname}",
+                                            size: "${cart[x].size}",
                                             action: "removeitem"
                                         },
                                         success: (res) => {
@@ -374,6 +391,14 @@
                         <\/script>
                     </div>
                 `)
+            }
+            console.log("current currency", currency)
+            if (currency === "KES") {
+                $(".price-kes").show()
+                $(".price-usd").hide()
+            } else {
+                $(".price-kes").hide()
+                $(".price-usd").show()
             }
         }
     })

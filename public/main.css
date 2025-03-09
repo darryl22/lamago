@@ -248,6 +248,218 @@ a {
     flex: 1;
 }
 
+.checkout-nav{
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    margin: auto;
+}
+
+.checkout-form-div{
+    width: 100%;
+    display: flex;
+    font-family: noto sans;
+    background-color: rgb(250, 250, 250);
+
+}
+
+.checkout-form-outer{
+    flex: 7;
+    background-color: white;
+}
+
+.checkout-form{
+    width: 70%;
+    float: right;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.checkout-summary-outer{
+    border-left: 1px solid gray;
+    flex: 6;
+}
+
+.checkout-summary{
+    background-color: rgb(250, 250, 250);
+    padding: 1em;
+    width: 65%;
+}
+
+.checkout-form p {
+    margin: 0;
+}
+
+.checkout-input-div{
+    position: relative;
+    display: flex;
+    flex: 1;
+}
+
+.checkout-input-div label {
+    position: absolute;
+    color: rgb(80, 80, 80);
+    left: 10px;
+    font-size: 0.7em;
+    top: 5px;
+}
+
+.checkout-input, .billing-input{
+    flex: 1;
+    padding-top: 23px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    border: 1px solid rgb(197, 197, 197);
+    border-radius: 8px;
+    background-color: white;
+    margin-bottom: 1.2em;
+    font-size: 1em;
+}
+
+.billing-input{
+    margin-bottom: 0em;
+}
+
+.checkout-input::placeholder, .billing-input::placeholder {
+    color: black;
+}
+
+.checkout-summary-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.9em;
+}
+
+.checkout-summary-image{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    aspect-ratio: 1 / 1;
+    width: 70px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.checkout-summary-count{
+    background-color: gray;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(5px, -5px);
+    color: white;
+    border-radius: 10px;
+}
+
+.checkout-payment-div-tab{
+    border: 1px solid black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0.8em;
+    background-color: rgb(245, 245, 245);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.payment-options-div{
+    display: flex;
+    gap: 0.5em;
+}
+
+.payment-options-div img {
+    height: 1.4em;
+}
+
+.checkout-payment-div-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2em;
+    background-color: rgb(245, 245, 245);
+    border: 1px solid gray;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.shipping-method-div, .billing-address-div{
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgb(197, 197, 197);
+}
+
+.shipping-method, .billing-address{
+    display: flex;
+    align-items: flex-start;
+    gap: 1em;
+    border-bottom: 1px solid rgb(197, 197, 197);
+    font-size: 0.9em;
+    padding: 1em;
+    cursor: pointer;
+}
+
+.billing-address-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    font-size: 0.9em;
+    padding: 1em;
+    background-color: rgb(240, 240, 240);
+}
+
+.shipping-selected, .billing-selected{
+    background-color: rgb(240, 240, 240);
+}
+
+.shipping-method-check, .billing-address-check{
+    align-self: flex-start;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgb(198, 198, 198);
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shipping-method-check-inner, .billing-address-check-inner{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 50%;
+    transition: 200ms;
+}
+
+.shipping-checked, .billing-checked{
+    width: 10px;
+    height: 10px;
+}
+
+.checkout-button{
+    border: none;
+    padding: 0.9em;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    margin-top: 1.5em;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
 .drag-carousel-image{
     width: 100%;
     position: relative;

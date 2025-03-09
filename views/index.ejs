@@ -89,22 +89,31 @@
                         <div class="item-sizes">
                             <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
                                 <p style="margin: 0;">Size:</p>
-                                <div class="size">S</div>
-                                <div class="size">M</div>
-                                <div class="size">L</div>
-                                <div class="size">S</div>
+                                <div class="size selected-size newin-select<%= newitems[x]._id %>">S</div>
+                                <div class="size newin-select<%= newitems[x]._id %>">M</div>
+                                <div class="size newin-select<%= newitems[x]._id %>">L</div>
+                                <div class="size newin-select<%= newitems[x]._id %>">S</div>
                             </div>
                             <form action="" id="newInCart<%= newitems[x]._id %>">
-                                <input type="hidden" name="size" value="S" id="shopSize">
+                                <input type="hidden" name="size" value="S" id="newinSize<%= newitems[x]._id %>">
                                 <input type="hidden" name="quantity" value="1">
                                 <input type="hidden" name="itemname" value="<%= newitems[x].title %>">
-                                <input type="hidden" name="price" value="<%= newitems[x].price.KES %>">
+                                <input type="hidden" name="priceKES" value="<%= newitems[x].price.KES %>">
+                                <input type="hidden" name="priceUSD" value="<%= newitems[x].price.USD %>">
                                 <input type="hidden" name="action" value="addone">
                                 <input type="hidden" name="picture" value="<%= newitems[x].images[0] %>">
                                 <button class="item-button">Add to cart</button>
                             </form>
                             <script>
                                 $(document).ready(() => {
+                                    let sizeSelect = $(".newin-select<%= newitems[x]._id %>")
+                                    sizeSelect.click(function () {
+                                        sizeSelect.removeClass("selected-size")
+                                        $(this).addClass("selected-size")
+                                        $("#newinSize<%= newitems[x]._id %>").val($(this).html())
+                                        console.log($(this))
+                                    })
+
                                     $("#newInCart<%= newitems[x]._id %>").on("submit", e => {
                                         e.preventDefault()
                                         let values = $("#newInCart<%= newitems[x]._id %>").serializeArray()
@@ -115,9 +124,10 @@
                                                 size: values[0].value,
                                                 quantity: values[1].value,
                                                 itemname: values[2].value,
-                                                price: values[3].value,
-                                                action: values[4].value,
-                                                image: values[5].value
+                                                priceKES: values[3].value,
+                                                priceUSD: values[4].value,
+                                                action: values[5].value,
+                                                image: values[6].value
                                             },
                                             success: (res) => {
                                                 $("#cartDivOuter").css("display", "flex")
@@ -136,7 +146,8 @@
                 </a>
                 <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                     <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= newitems[x].title %></p>
-                    <p style="margin: 0;">Ksh <%= newitems[x].price.KES %></p>
+                    <p style="margin: 0;" class="price-kes">Ksh <%= newitems[x].price.KES %></p>
+                    <p style="margin: 0;" class="price-usd">$<%= newitems[x].price.USD %></p>
                 </div>
             </div>
         </div>
@@ -217,22 +228,31 @@
                             <div class="item-sizes">
                                 <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
                                     <p style="margin: 0;">Size:</p>
-                                    <div class="size">S</div>
-                                    <div class="size">M</div>
-                                    <div class="size">L</div>
-                                    <div class="size">S</div>
+                                    <div class="size selected-size summer-select<%= summercapsule[x]._id %>">S</div>
+                                    <div class="size summer-select<%= summercapsule[x]._id %>">M</div>
+                                    <div class="size summer-select<%= summercapsule[x]._id %>">L</div>
+                                    <div class="size summer-select<%= summercapsule[x]._id %>">S</div>
                                 </div>
                                 <form action="" id="cartformSummer<%= summercapsule[x]._id %>">
-                                    <input type="hidden" name="size" value="S" id="shopSize">
+                                    <input type="hidden" name="size" value="S" id="summerSize<%= summercapsule[x]._id %>">
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="itemname" value="<%= summercapsule[x].title %>">
-                                    <input type="hidden" name="price" value="<%= summercapsule[x].price.KES %>">
+                                    <input type="hidden" name="priceKES" value="<%= summercapsule[x].price.KES %>">
+                                    <input type="hidden" name="priceUSD" value="<%= summercapsule[x].price.USD %>">
                                     <input type="hidden" name="action" value="addone">
                                     <input type="hidden" name="picture" value="<%= summercapsule[x].images[0] %>">
                                     <button class="item-button">Add to cart</button>
                                 </form>
                                 <script>
                                     $(document).ready(() => {
+                                        let sizeSelect = $(".summer-select<%= summercapsule[x]._id %>")
+                                        sizeSelect.click(function () {
+                                            sizeSelect.removeClass("selected-size")
+                                            $(this).addClass("selected-size")
+                                            $("#summerSize<%= summercapsule[x]._id %>").val($(this).html())
+                                            console.log($(this))
+                                        })
+
                                         $("#cartformSummer<%= summercapsule[x]._id %>").on("submit", e => {
                                             e.preventDefault()
                                             let values = $("#cartformSummer<%= summercapsule[x]._id %>").serializeArray()
@@ -243,9 +263,10 @@
                                                     size: values[0].value,
                                                     quantity: values[1].value,
                                                     itemname: values[2].value,
-                                                    price: values[3].value,
-                                                    action: values[4].value,
-                                                    image: values[5].value
+                                                    priceKES: values[3].value,
+                                                    priceUSD: values[4].value,
+                                                    action: values[5].value,
+                                                    image: values[6].value
                                                 },
                                                 success: (res) => {
                                                     $("#cartDivOuter").css("display", "flex")
@@ -264,7 +285,8 @@
                     </a>
                     <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                         <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= summercapsule[x].title %></p>
-                        <p style="margin: 0;">Ksh <%= summercapsule[x].price.KES %></p>
+                        <p style="margin: 0;" class="price-kes">Ksh <%= summercapsule[x].price.KES %></p>
+                        <p style="margin: 0;" class="price-usd">$<%= summercapsule[x].price.USD %></p>
                     </div>
                 </div>
             </div>
@@ -283,22 +305,31 @@
                             <div class="item-sizes">
                                 <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
                                     <p style="margin: 0;">Size:</p>
-                                    <div class="size">S</div>
-                                    <div class="size">M</div>
-                                    <div class="size">L</div>
-                                    <div class="size">S</div>
+                                    <div class="size selected-size linensize-select<%= linenluxe[x]._id %>">S</div>
+                                    <div class="size linensize-select<%= linenluxe[x]._id %>">M</div>
+                                    <div class="size linensize-select<%= linenluxe[x]._id %>">L</div>
+                                    <div class="size linensize-select<%= linenluxe[x]._id %>">S</div>
                                 </div>
                                 <form action="" id="cartformLinen<%= linenluxe[x]._id %>">
-                                    <input type="hidden" name="size" value="S" id="shopSize">
+                                    <input type="hidden" name="size" value="S" id="linenSize<%= linenluxe[x]._id %>">
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="itemname" value="<%= linenluxe[x].title %>">
-                                    <input type="hidden" name="price" value="<%= linenluxe[x].price.KES %>">
+                                    <input type="hidden" name="priceKES" value="<%= linenluxe[x].price.KES %>">
+                                    <input type="hidden" name="priceUSD" value="<%= linenluxe[x].price.USD %>">
                                     <input type="hidden" name="action" value="addone">
                                     <input type="hidden" name="picture" value="<%= linenluxe[x].images[0] %>">
                                     <button class="item-button">Add to cart</button>
                                 </form>
                                 <script>
                                     $(document).ready(() => {
+                                        let sizeSelect = $(".linensize-select<%= linenluxe[x]._id %>")
+                                        sizeSelect.click(function () {
+                                            sizeSelect.removeClass("selected-size")
+                                            $(this).addClass("selected-size")
+                                            $("#linenSize<%= linenluxe[x]._id %>").val($(this).html())
+                                            console.log($(this))
+                                        })
+
                                         $("#cartformLinen<%= linenluxe[x]._id %>").on("submit", e => {
                                             e.preventDefault()
                                             let values = $("#cartformLinen<%= linenluxe[x]._id %>").serializeArray()
@@ -309,9 +340,10 @@
                                                     size: values[0].value,
                                                     quantity: values[1].value,
                                                     itemname: values[2].value,
-                                                    price: values[3].value,
-                                                    action: values[4].value,
-                                                    image: values[5].value
+                                                    priceKES: values[3].value,
+                                                    priceUSD: values[4].value,
+                                                    action: values[5].value,
+                                                    image: values[6].value
                                                 },
                                                 success: (res) => {
                                                     $("#cartDivOuter").css("display", "flex")
@@ -330,7 +362,8 @@
                     </a>
                     <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                         <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= linenluxe[x].title %></p>
-                        <p style="margin: 0;">Ksh <%= linenluxe[x].price.KES %></p>
+                        <p style="margin: 0;" class="price-kes">Ksh <%= linenluxe[x].price.KES %></p>
+                        <p style="margin: 0;" class="price-usd">$<%= linenluxe[x].price.USD %></p>
                     </div>
                 </div>
             </div>
@@ -349,22 +382,31 @@
                             <div class="item-sizes">
                                 <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;">
                                     <p style="margin: 0;">Size:</p>
-                                    <div class="size">S</div>
-                                    <div class="size">M</div>
-                                    <div class="size">L</div>
-                                    <div class="size">S</div>
+                                    <div class="size selected-size celestsize-select<%= celestialchic[x]._id %>">S</div>
+                                    <div class="size celestsize-select<%= celestialchic[x]._id %>">M</div>
+                                    <div class="size celestsize-select<%= celestialchic[x]._id %>">L</div>
+                                    <div class="size celestsize-select<%= celestialchic[x]._id %>">S</div>
                                 </div>
                                 <form action="" id="cartformCelest<%= celestialchic[x]._id %>">
-                                    <input type="hidden" name="size" value="S" id="shopSize">
+                                    <input type="hidden" name="size" value="S" id="celestSize<%= celestialchic[x]._id %>">
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="itemname" value="<%= celestialchic[x].title %>">
-                                    <input type="hidden" name="price" value="<%= celestialchic[x].price.KES %>">
+                                    <input type="hidden" name="priceKES" value="<%= celestialchic[x].price.KES %>">
+                                    <input type="hidden" name="priceUSD" value="<%= celestialchic[x].price.USD %>">
                                     <input type="hidden" name="action" value="addone">
                                     <input type="hidden" name="picture" value="<%= celestialchic[x].images[0] %>">
                                     <button class="item-button">Add to cart</button>
                                 </form>
                                 <script>
                                     $(document).ready(() => {
+                                        let sizeSelect = $(".celestsize-select<%= celestialchic[x]._id %>")
+                                        sizeSelect.click(function () {
+                                            sizeSelect.removeClass("selected-size")
+                                            $(this).addClass("selected-size")
+                                            $("#celestSize<%= celestialchic[x]._id %>").val($(this).html())
+                                            console.log($(this))
+                                        })
+
                                         $("#cartformCelest<%= celestialchic[x]._id %>").on("submit", e => {
                                             e.preventDefault()
                                             let values = $("#cartformCelest<%= celestialchic[x]._id %>").serializeArray()
@@ -375,9 +417,10 @@
                                                     size: values[0].value,
                                                     quantity: values[1].value,
                                                     itemname: values[2].value,
-                                                    price: values[3].value,
-                                                    action: values[4].value,
-                                                    image: values[5].value
+                                                    priceKES: values[3].value,
+                                                    priceUSD: values[4].value,
+                                                    action: values[5].value,
+                                                    image: values[6].value
                                                 },
                                                 success: (res) => {
                                                     $("#cartDivOuter").css("display", "flex")
@@ -396,7 +439,8 @@
                     </a>
                     <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                         <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= celestialchic[x].title %></p>
-                        <p style="margin: 0;">Ksh <%= celestialchic[x].price.KES %></p>
+                        <p style="margin: 0;" class="price-kes">Ksh <%= celestialchic[x].price.KES %></p>
+                        <p style="margin: 0;" class="price-usd">$<%= celestialchic[x].price.USD %></p>
                     </div>
                 </div>
             </div>

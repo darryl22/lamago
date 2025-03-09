@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width: 100%; border-bottom: 1px solid rgb(191, 191, 191);">
+        <div class="checkout-nav">
+            <a href="/">
+                <img src="/images/logos/logo5.avif" alt="logo 5" style="height: 4em;">
+            </a>
+            <a href="/shop/all">
+                <img src="/images/logos/shopping-bag.png" alt="shopping bag" style="height: 1.5em;">
+            </a>
+        </div>
+    </div>
+    <div class="checkout-form-div">
+        <div class="checkout-form-outer">
+            <form action="/checkout" method="post" class="checkout-form">
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.8em; margin-bottom: 0.5em;">
+                    <p style="color: gray;">Account</p>
+                    <div style="padding: 2px;">
+                        <img src="/images/logos/arrowdown.png" alt="arrowdown" style="height: 0.6em;">
+                    </div>
+                </div>
+                <p style="font-size: 0.9em;">email@gmail.com</p>
+                <div style="height: 1px; background-color: rgb(208, 208, 208); margin: 1em 0em;"></div>
+                <div>
+                    <input type="checkbox" name="newsandoffers" id="newsandoffers">
+                    <label for="newsandoffers">Email me with news and offers</label>
+                </div>
+                <p style="font-size: 1.3em; margin-top: 1em; margin-bottom: 0.5em;">Delivery</p>
+    
+                <div class="checkout-input-div">
+                    <label for="country">Country</label>
+                    <input type="text" class="checkout-input" placeholder="Kenya" name="country">
+                </div>
+                <div style="display: flex; gap: 1em;">
+                    <div class="checkout-input-div">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="checkout-input" placeholder="First Name" name="firstname">
+                    </div>
+                    <div class="checkout-input-div">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="checkout-input" placeholder="Last Name" name="lastname">
+                    </div>
+                </div>
+                <div class="checkout-input-div">
+                    <label for="address">Address</label>
+                    <input type="text" class="checkout-input" placeholder="Address" name="address">
+                </div>
+                <div class="checkout-input-div">
+                    <label for="appartment">Appartment</label>
+                    <input type="text" class="checkout-input" placeholder="Appartment" name="appartment">
+                </div>
+                <div style="display: flex; gap: 1em;">
+                    <div class="checkout-input-div">
+                        <label for="city">City</label>
+                        <input type="text" class="checkout-input" placeholder="City" name="city">
+                    </div>
+                    <div class="checkout-input-div">
+                        <label for="postalcode">Postal Code</label>
+                        <input type="text" class="checkout-input" placeholder="Postal Code" name="postalcode">
+                    </div>
+                </div>
+                <p style="margin-top: 2em; margin-bottom: 1em;">Shipping Method</p>
+                <div class="shipping-method-div">
+                    <div class="shipping-method shipping-selected" id="shippingMethod0">
+                        <div>
+                            <div class="shipping-method-check">
+                                <div class="shipping-method-check-inner shipping-checked" id="shippingCheckInner0"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="font-weight: bold;">title1</p>
+                            <p style="color: rgb(86, 86, 86);">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, alias!</p>
+                        </div>
+                        <p style="white-space: nowrap;">Ksh 500</p>
+                    </div>
+                    <div class="shipping-method" id="shippingMethod1">
+                        <div>
+                            <div class="shipping-method-check">
+                                <div class="shipping-method-check-inner" id="shippingCheckInner1"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="font-weight: bold;">title2</p>
+                            <p style="color:rgb(86, 86, 86);">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, alias!</p>
+                        </div>
+                        <p style="white-space: nowrap;">Ksh 500</p>
+                    </div>
+                    <div class="shipping-method" id="shippingMethod2">
+                        <div>
+                            <div class="shipping-method-check">
+                                <div class="shipping-method-check-inner" id="shippingCheckInner2"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="font-weight: bold;">title3</p>
+                            <p style="color:rgb(86, 86, 86);">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, alias!</p>
+                        </div>
+                        <p style="white-space: nowrap;">Ksh 500</p>
+                    </div>
+                </div>
+                <p style="margin-top: 2em; font-size: 1.4em;">Payment</p>
+                <p style="margin-top: 0.5em; margin-bottom: 1em; color: gray;">All transactions are secure and encrypted.</p>
+    
+                <div class="checkout-payment-div">
+                    <div class="checkout-payment-div-tab">
+                        <p>Pesapal</p>
+                        <div class="payment-options-div">
+                            <img src="/images/logos/visa.svg" alt="payment image">
+                            <img src="/images/logos/mastercard.svg" alt="payment image">
+                            <img src="/images/logos/american_express.svg" alt="payment image">
+                            <img src="/images/logos/mpesa.svg" alt="payment image">
+                            <img src="/images/logos/mtn_mobile_money.svg" alt="payment image">
+                            <img src="/images/logos/airtel_money.svg" alt="payment image">
+                        </div>
+                    </div>
+                    <div class="checkout-payment-div-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width: 100px;" viewBox="-252.3 356.1 163 80.9" class="zjrzY"><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M-108.9 404.1v30c0 1.1-.9 2-2 2H-231c-1.1 0-2-.9-2-2v-75c0-1.1.9-2 2-2h120.1c1.1 0 2 .9 2 2v37m-124.1-29h124.1"></path><circle cx="-227.8" cy="361.9" r="1.8" fill="currentColor"></circle><circle cx="-222.2" cy="361.9" r="1.8" fill="currentColor"></circle><circle cx="-216.6" cy="361.9" r="1.8" fill="currentColor"></circle><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M-128.7 400.1H-92m-3.6-4.1 4 4.1-4 4.1"></path></svg>
+                        <p style="margin-top: 1em;">After clicking “Pay now”, you will be redirected to Pesapal to complete your purchase securely.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 2em; margin-bottom: 1em;">Billing Address</p>
+                <div class="billing-address-div">
+                    <div class="billing-address billing-selected" id="billingMethod0">
+                        <div>
+                            <div class="billing-address-check">
+                                <div class="billing-address-check-inner billing-checked" id="billingCheckInner0"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="margin-left: 2em;">Same as Shipping Address</p>
+                        </div>
+                    </div>
+                    <div class="billing-address" id="billingMethod1">
+                        <div>
+                            <div class="billing-address-check">
+                                <div class="billing-address-check-inner" id="billingCheckInner1"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="margin-left: 2em;">Use A different Billing Address</p>
+                        </div>
+                    </div>
+                    <div class="billing-address-form" id="billingMethodForm" style="display: none;">
+                        <div class="checkout-input-div">
+                            <label for="addressBilling">Saved Addresses</label>
+                            <input type="text" class="billing-input" placeholder="Address" name="addressBilling">
+                        </div>
+                        <div class="checkout-input-div">
+                            <label for="countryBilling">Country/Region</label>
+                            <input type="text" class="billing-input" placeholder="Address" name="countryBilling">
+                        </div>
+                        <div style="display: flex; gap: 1em;">
+                            <div class="checkout-input-div">
+                                <label for="firstnameBilling">First Name</label>
+                                <input type="text" class="billing-input" placeholder="First Name" name="firstnameBilling">
+                            </div>
+                            <div class="checkout-input-div">
+                                <label for="lastnameBilling">Last Name</label>
+                                <input type="text" class="billing-input" placeholder="Last Name" name="lastnameBilling">
+                            </div>
+                        </div>
+                        <div class="checkout-input-div">
+                            <label for="addressNew">Address</label>
+                            <input type="text" class="billing-input" placeholder="Address" name="addressNew">
+                        </div>
+                        <div class="checkout-input-div">
+                            <label for="appartmentBilling">Appartment/Suite</label>
+                            <input type="text" class="billing-input" placeholder="Address" name="appartmentBilling">
+                        </div>
+                        <div style="display: flex; gap: 1em;">
+                            <div class="checkout-input-div">
+                                <label for="firstname">First Name</label>
+                                <input type="text" class="billing-input" placeholder="First Name" name="firstname" size="4">
+                            </div>
+                            <div class="checkout-input-div">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" class="billing-input" placeholder="Last Name" name="lastname" size="4">
+                            </div>
+                            <div class="checkout-input-div">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" class="billing-input" placeholder="Last Name" name="lastname" size="4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="checkout-button">Pay Now</button>
+            </form>
+        </div>
+        <div class="checkout-summary-outer">
+            <div class="checkout-summary">
+                <div class="checkout-summary-item">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 9px;">
+                        <div class="checkout-summary-image" style="background-image: url('/images/clothing/alana-linen-mini-citrus1.webp');">
+                            <div class="checkout-summary-count">1</div>
+                        </div>
+                        <div>
+                            <p style="margin: 0; margin-bottom: 5px;">Item Title 1</p>
+                            <p style="margin: 0; color: rgb(75, 75, 75);">S</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="margin: 0;">Ksh 5000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(() => {
+        $(".shipping-method").each((x, elm) => {
+            $(`#shippingMethod${x}`).on("click", () => {
+                $(".shipping-method").removeClass("shipping-selected")
+                $(".shipping-method-check-inner").removeClass("shipping-checked")
+                $(`#shippingMethod${x}`).addClass("shipping-selected")
+                $(`#shippingCheckInner${x}`).addClass("shipping-checked")
+            })
+        })
+
+        $("#billingMethod0").on("click", () => {
+            $("#billingMethod0").addClass("billing-selected")
+            $("#billingCheckInner0").addClass("billing-checked")
+            $("#billingMethod1").removeClass("billing-selected")
+            $("#billingCheckInner1").removeClass("billing-checked")
+            $("#billingMethodForm").hide(200)
+        })
+
+        $("#billingMethod1").on("click", () => {
+            $("#billingMethod1").addClass("billing-selected")
+            $("#billingCheckInner1").addClass("billing-checked")
+            $("#billingMethod0").removeClass("billing-selected")
+            $("#billingCheckInner0").removeClass("billing-checked")
+            $("#billingMethodForm").show(200)
+        })
+    })
+</script>
+</html>

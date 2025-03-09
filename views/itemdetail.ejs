@@ -32,11 +32,11 @@
             </div>
             <p>Size: S</p>
             <div style="display: flex; align-items: center; gap: 0.4em; margin-bottom: 2em;">
-                <div class="size selected-size">XS</div>
-                <div class="size">S</div>
-                <div class="size">M</div>
-                <div class="size">L</div>
-                <div class="size">XL</div>
+                <div class="size selected-size shopsize-select<%= item._id %>">XS</div>
+                <div class="size shopsize-select<%= item._id %>">S</div>
+                <div class="size shopsize-select<%= item._id %>">M</div>
+                <div class="size shopsize-select<%= item._id %>">L</div>
+                <div class="size shopsize-select<%= item._id %>">XL</div>
             </div>
             <div class="item-counter-div">
                 <button class="item-counter-button" onclick="subQuantity('<%= item._id %>')">-</button>
@@ -44,7 +44,7 @@
                 <button class="item-counter-button" onclick="addQuantity('<%= item._id %>')">+</button>
             </div>
             <form action="" id="cartform<%= item._id %>" class="addtocart-form">
-                <input type="hidden" name="size" value="S" id="shopSize">
+                <input type="hidden" name="size" value="S" id="shopSize<%= item._id %>">
                 <input type="hidden" name="quantity" value="1" id="quantity<%= item._id %>">
                 <input type="hidden" name="itemname" value="<%= item.title %>">
                 <input type="hidden" name="priceKES" value="<%= item.price.KES %>">
@@ -73,6 +73,14 @@
                 }
 
                 $(document).ready(() => {
+                    let sizeSelect = $(".shopsize-select<%= item._id %>")
+                    sizeSelect.click(function () {
+                        sizeSelect.removeClass("selected-size")
+                        $(this).addClass("selected-size")
+                        $("#shopSize<%= item._id %>").val($(this).html())
+                        console.log($(this))
+                    })
+
                     $("#cartform<%= item._id %>").on("submit", e => {
                         e.preventDefault()
                         let values = $("#cartform<%= item._id %>").serializeArray()

@@ -86,10 +86,10 @@ app.get("/", (request, response) => {
                     celestialchic.push(res[x])
                 }
             }
-            response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, summercapsule: summercapsule, linenluxe: linenluxe, celestialchic: celestialchic, newitems: newItems})
+            response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, summercapsule: summercapsule, linenluxe: linenluxe, celestialchic: celestialchic, newitems: newItems, currency: request.session.currency})
         } catch (error) {
             console.log(error)
-            response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+            response.render("index.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
         }
     }
     db()
@@ -103,7 +103,7 @@ app.post("/changecurrency", (request, response) => {
 })
 
 app.get("/aboutus", (request, response) => {
-    response.render("aboutus.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+    response.render("aboutus.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
 })
 
 app.get("/shop/:category", (request, response) => {
@@ -112,93 +112,18 @@ app.get("/shop/:category", (request, response) => {
         try {
             const database = client.db("lamago")
             const clothing = database.collection("clothing")
-            let res = await clothing.find().toArray()
             if (request.params.category === "all") {
-                response.render("shop.ejs", {items: res, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "dress"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("dress")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "mididress"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("mididress")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "minidress"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("minidress")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "maxidress"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("maxidress")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "set"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("set")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "top"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("top")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "pants"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("pants")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "coat"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("coat")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "shorts"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("shorts")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
-            } else if (request.params.category === "skirts"){
-                let itemsArray = []
-                for (let x = 0; x < res.length; x++) {
-                    if (res[x].category.includes("skirts")) {
-                        itemsArray.push(res[x])
-                    }
-                }
-                response.render("shop.ejs", {items: itemsArray, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+                let all = await clothing.find().toArray()
+                // console.log(all)
+                response.render("shop.ejs", {items: all, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category, currency: request.session.currency})
+            } else {
+                let filtered = await clothing.find({category: {$regex: request.params.category}}).toArray()
+                // console.log(filtered)
+                response.render("shop.ejs", {items: filtered, cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category, currency: request.session.currency})
             }
         } catch (error) {
             console.log(error)
-            response.render("shop.ejs", {items: [], cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category})
+            response.render("shop.ejs", {items: [], cart: request.session.cart, cartTotal: request.session.cartTotal, category: request.params.category, currency: request.session.currency})
         }
     }
     db()
@@ -220,17 +145,17 @@ app.get("/preorder", (request, response) => {
                     console.log("no preorder")
                 }
             }
-            response.render("preorder.ejs", {items: preorder, cart: request.session.cart, cartTotal: request.session.cartTotal})
+            response.render("preorder.ejs", {items: preorder, cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
         } catch (error) {
             console.log(error)
-            response.render("preorder.ejs", {items: [], cart: request.session.cart, cartTotal: request.session.cartTotal})
+            response.render("preorder.ejs", {items: [], cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
         }
     }
     db()
 })
 
 app.get("/giftcards", (request, response) => {
-    response.render("giftcards.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+    response.render("giftcards.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
 })
 
 app.get("/itemdetail/:id", (request, response) => {
@@ -241,99 +166,25 @@ app.get("/itemdetail/:id", (request, response) => {
             const database = client.db("lamago")
             const item = database.collection("clothing")
             let res = await item.findOne({"_id": id})
-            response.render("itemdetail.ejs", {item: res, cart: request.session.cart, cartTotal: request.session.cartTotal})
+            response.render("itemdetail.ejs", {item: res, cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
         } catch (error) {
             console.log(error)
-            response.render("itemdetail.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+            response.render("itemdetail.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
         }
     }
     db()
 })
 
-app.get("/cart", (request,response) => {
-    console.log("cart function")
-    response.render("cart.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
-})
-
-app.post("/cart", (request,response) => {
-    let action = request.body.action
-    let cart = request.session.cart
-    if (action === "addone") {
-        let item = {
-            size: request.body.size,
-            quantity: parseInt(request.body.quantity),
-            itemname: request.body.itemname,
-            price: {
-                "KES": request.body.priceKES,
-                "USD": request.body.priceUSD
-            },
-            image: request.body.image
-        }
-
-        if (cart.length === 0) {
-            cart.push(item)
-            console.log("first item")
-        } else {
-            let inserted = false
-            for (let x = 0; x < cart.length; x++) {
-                if (cart[x].itemname === item.itemname) {
-                    cart[x].quantity = parseInt(cart[x].quantity) + parseInt(request.body.quantity)
-                    console.log("added quantity")
-                    inserted = true
-                }
-            }
-            if (inserted === false) {
-                cart.push(item)
-            }
-        }
-    } else if (action === "removeone") {
-        for (let x = 0; x < cart.length; x++) {
-            if (cart[x].itemname === request.body.itemname) {
-                cart[x].quantity = parseInt(cart[x].quantity) - 1
-                console.log("remove one")
-                console.log(cart[x].quantity)
-            }
-        }
-    } else if (action === "addquantity") {
-        for (let x = 0; x < cart.length; x++) {
-            if (cart[x].itemname === request.body.itemname) {
-                cart[x].quantity = parseInt(cart[x].quantity) + 1
-                console.log("added one")
-                console.log(cart[x].quantity)
-            }
-        }
-    } else if (action === "removeitem") {
-        for (let x = 0; x < cart.length; x++) {
-            if (cart[x].itemname === request.body.itemname) {
-                cart.splice(x, 1)
-                console.log("removed item")
-            }
-        }
-    }
-    let tempKES = 0
-    let tempUSD = 0
-    for (let x = 0; x < cart.length; x++) {
-        tempKES = tempKES + (cart[x].price.KES * cart[x].quantity)
-        tempUSD = tempUSD + (cart[x].price.USD * cart[x].quantity)
-    }
-    console.log(tempUSD, tempKES)
-    request.session.cartTotal = {
-        "KES": tempKES,
-        "USD": tempUSD
-    }
-    response.json({"success": true, "cart": request.session.cart, "cartTotal": request.session.cartTotal})
-})
-
-app.get("/login", (request, response) => {
-    response.render("login.ejs")
-})
-
 app.get("/contactus", (request, response) => {
-    response.render("contactus.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+    response.render("contactus.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
 })
 
 app.post("/contactus", (request, response) => {
     response.redirect("/contactus")
+})
+
+app.get("/login", (request, response) => {
+    response.render("login.ejs")
 })
 
 app.post("/login", (request, response) => {
@@ -377,7 +228,83 @@ app.post("/verification", (request, response) => {
 })
 
 app.get("/profile", (request, response) => {
-    response.render("profile.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal})
+    response.render("profile.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
+})
+
+app.get("/cart", (request,response) => {
+    console.log("cart function")
+    response.render("cart.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
+})
+
+app.post("/cart", (request,response) => {
+    let action = request.body.action
+    let cart = request.session.cart
+    if (action === "addone") {
+        let item = {
+            size: request.body.size,
+            quantity: parseInt(request.body.quantity),
+            itemname: request.body.itemname,
+            price: {
+                "KES": request.body.priceKES,
+                "USD": request.body.priceUSD
+            },
+            image: request.body.image
+        }
+
+        if (cart.length === 0) {
+            cart.push(item)
+            console.log("first item")
+        } else {
+            let inserted = false
+            for (let x = 0; x < cart.length; x++) {
+                if (cart[x].itemname === item.itemname && cart[x].size === item.size) {
+                    cart[x].quantity = parseInt(cart[x].quantity) + parseInt(request.body.quantity)
+                    inserted = true
+                }
+            }
+            if (inserted === false) {
+                cart.push(item)
+            }
+        }
+    } else if (action === "removeone") {
+        for (let x = 0; x < cart.length; x++) {
+            if (cart[x].itemname === request.body.itemname && cart[x].size === request.body.size) {
+                cart[x].quantity = parseInt(cart[x].quantity) - 1
+            }
+        }
+    } else if (action === "addquantity") {
+        for (let x = 0; x < cart.length; x++) {
+            if (cart[x].itemname === request.body.itemname && cart[x].size === request.body.size) {
+                cart[x].quantity = parseInt(cart[x].quantity) + 1
+            }
+        }
+    } else if (action === "removeitem") {
+        for (let x = 0; x < cart.length; x++) {
+            if (cart[x].itemname === request.body.itemname && cart[x].size === request.body.size) {
+                cart.splice(x, 1)
+            }
+        }
+    }
+    let tempKES = 0
+    let tempUSD = 0
+    for (let x = 0; x < cart.length; x++) {
+        tempKES = tempKES + (cart[x].price.KES * cart[x].quantity)
+        tempUSD = tempUSD + (cart[x].price.USD * cart[x].quantity)
+    }
+    request.session.cartTotal = {
+        "KES": tempKES,
+        "USD": tempUSD
+    }
+    response.json({"success": true, "cart": request.session.cart, "cartTotal": request.session.cartTotal, currency: request.session.currency})
+})
+
+app.get("/checkout", (request,response) => {
+    response.render("checkout.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
+})
+
+app.post("/checkout", (request,response) => {
+    console.log(request.query)
+    response.render("checkout.ejs", {cart: request.session.cart, cartTotal: request.session.cartTotal, currency: request.session.currency})
 })
 
 app.listen(PORT, () => {

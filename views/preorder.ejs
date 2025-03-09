@@ -37,64 +37,75 @@
         </div>
         <div class="shop-items-div">
             <% for(var x = 0; x < items.length; x++) { %>
-            <div>
-                <a href="/itemdetail/<%= items[x]._id %>">
-                    <div class="shop-item" style="background-image: url('/images/clothing/<%= items[x].images[0] %>');">
-                        <div class="second-image" style="background-image: url('/images/clothing/<%= items[x].images[1] %>');"></div>
-                        <a href="" class="quick-shop">QUICK SHOP</a>
-                        <div class="item-sizes">
-                            <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;" id="sizes<%= items[x]._id %>">
-                                <p style="margin: 0;">Size:</p>
-                                <div class="size selected-size">S</div>
-                                <div class="size">M</div>
-                                <div class="size">L</div>
-                                <div class="size">S</div>
-                            </div>
-                            <form action="" id="cartform<%= items[x]._id %>">
-                                <input type="hidden" name="size" value="S" id="shopSize">
-                                <input type="hidden" name="quantity" value="1">
-                                <input type="hidden" name="itemname" value="<%= items[x].title %>">
-                                <input type="hidden" name="price" value="<%= items[x].price.KES %>">
-                                <input type="hidden" name="action" value="addone">
-                                <input type="hidden" name="picture" value="<%= items[x].images[0] %>">
-                                <button class="item-button">Add to cart</button>
-                            </form>
-                            <script>
-                                $(document).ready(() => {
-                                    $("#cartform<%= items[x]._id %>").on("submit", e => {
-                                        e.preventDefault()
-                                        let values = $("#cartform<%= items[x]._id %>").serializeArray()
-                                        $.ajax({
-                                            method: "post",
-                                            url: "/cart",
-                                            data: {
-                                                size: values[0].value,
-                                                quantity: values[1].value,
-                                                itemname: values[2].value,
-                                                price: values[3].value,
-                                                action: values[4].value,
-                                                image: values[5].value
-                                            },
-                                            success: (res) => {
-                                                $("#cartDivOuter").css("display", "flex")
-                                                $.fn.updateCart(res.cart, res.cartTotal)
-                                                
-                                            },
-                                            error: (error) => {
-                                                console.log(error)
-                                            }
+                <div>
+                    <a href="/itemdetail/<%= items[x]._id %>">
+                        <div class="shop-item" style="background-image: url('/images/clothing/<%= items[x].images[0] %>');">
+                            <div class="second-image" style="background-image: url('/images/clothing/<%= items[x].images[1] %>');"></div>
+                            <a href="" class="quick-shop">QUICK SHOP</a>
+                            <div class="item-sizes">
+                                <div style="display: flex; align-items: center; padding: 1em; gap: 0.4em;" id="shopSizes<%= items[x]._id %>">
+                                    <p style="margin: 0;">Size:</p>
+                                    <div class="size selected-size shopsize-select<%= items[x]._id %>">S</div>
+                                    <div class="size shopsize-select<%= items[x]._id %>">M</div>
+                                    <div class="size shopsize-select<%= items[x]._id %>">L</div>
+                                    <div class="size shopsize-select<%= items[x]._id %>">S</div>
+                                </div>
+                                <form action="" id="cartform<%= items[x]._id %>">
+                                    <input type="hidden" name="size" value="S" id="shopSize<%= items[x]._id %>">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="itemname" value="<%= items[x].title %>">
+                                    <input type="hidden" name="priceKES" value="<%= items[x].price.KES %>">
+                                    <input type="hidden" name="priceUSD" value="<%= items[x].price.USD %>">
+                                    <input type="hidden" name="action" value="addone">
+                                    <input type="hidden" name="picture" value="<%= items[x].images[0] %>">
+                                    <button class="item-button">Add to cart</button>
+                                </form>
+                                <script>
+                                    $(document).ready(() => {
+                                        let sizeSelect = $(".shopsize-select<%= items[x]._id %>")
+                                        sizeSelect.click(function () {
+                                            sizeSelect.removeClass("selected-size")
+                                            $(this).addClass("selected-size")
+                                            $("#shopSize<%= items[x]._id %>").val($(this).html())
+                                            console.log($(this))
+                                        })
+    
+                                        $("#cartform<%= items[x]._id %>").on("submit", e => {
+                                            e.preventDefault()
+                                            let values = $("#cartform<%= items[x]._id %>").serializeArray()
+                                            $.ajax({
+                                                method: "post",
+                                                url: "/cart",
+                                                data: {
+                                                    size: values[0].value,
+                                                    quantity: values[1].value,
+                                                    itemname: values[2].value,
+                                                    priceKES: values[3].value,
+                                                    priceUSD: values[4].value,
+                                                    action: values[5].value,
+                                                    image: values[6].value
+                                                },
+                                                success: (res) => {
+                                                    $("#cartDivOuter").css("display", "flex")
+                                                    $.fn.updateCart(res.cart, res.cartTotal)
+                                                    
+                                                },
+                                                error: (error) => {
+                                                    console.log(error)
+                                                }
+                                            })
                                         })
                                     })
-                                })
-                            </script>
+                                </script>
+                            </div>
                         </div>
+                    </a>
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= items[x].title %></p>
+                        <p style="margin: 0;" class="price-kes">KES <%= items[x].price.KES %></p>
+                        <p style="margin: 0;" class="price-usd">$<%= items[x].price.USD %></p>
                     </div>
-                </a>
-                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <p style="margin-top: 10px; margin-bottom: 0.5em;"><%= items[x].title %></p>
-                    <p style="margin: 0;">KES <%= items[x].price.KES %></p>
                 </div>
-            </div>
             <% } %>
         </div>
     </div>
